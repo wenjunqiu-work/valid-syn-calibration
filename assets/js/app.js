@@ -6,6 +6,21 @@ import {
   storageKey,
   utcStamp,
 } from "./core.js";
+import {
+  BACKUP_SCHEMA_VERSION,
+  CANNOT_CREATE,
+  CREATED,
+  STATE_SCHEMA_VERSION,
+  buildCannotCreateRow,
+  candidateOutcome,
+  decisionStats,
+  decisionTarget,
+  pairPolicyHashes,
+  setCandidateOutcome,
+  upgradeBackup,
+  upgradeState,
+  validateCandidateModel,
+} from "./model.js";
 
 const TYPES = ["SO", "PPM", "ID", "DLC", "GLC"];
 const TYPE_NAMES = {
@@ -82,7 +97,7 @@ function showCandidateMessage(message, kind = "") {
 
 function freshState(id) {
   return {
-    schema_version: 1,
+    schema_version: STATE_SCHEMA_VERSION,
     bundle_id: manifest.bundle_id,
     bundle_version: manifest.bundle_version,
     assignment_id: manifest.assignment_id,
@@ -97,14 +112,23 @@ function freshState(id) {
 function loadState(id) {
   const key = storageKey(manifest, id);
   try {
-    const saved = JSON.parse(localStorage.getItem(key));
-    if (
-      saved && saved.schema_version === 1 && saved.bundle_id === manifest.bundle_id &&
-      saved.bundle_version === manifest.bundle_version && saved.assignment_id === manifest.assignment_id &&
-      saved.batch_id === manifest.batch_id && saved.annotator_id === id
-    ) return saved;
+    const current = localStorage.getItem(key);
+    if (current) return upgradeState(JSON.parse(current), manifest, id, TYPES);
   } catch (_) {
     // Start a clean namespaced draft if a browser entry is malformed.
+  }
+
+  const legacyManifest = { ...manifest, bundle_version: "1.0.0" };
+  const legacyKey = storageKey(legacyManifest, id);
+  try {
+    const legacy = localStorage.getItem(legacyKey);
+    if (legacy) {
+      const migrated = upgradeState(JSON.parse(legacy), manifest, id, TYPES);
+      localStorage.setItem(key, JSON.stringify(migrated));
+      return migrated;
+    }
+  } catch (_) {
+    // Keep the legacy entry untouched and start clean if it cannot be migrated.
   }
   return freshState(id);
 }
@@ -130,6 +154,7 @@ function defaultOperation(type, opType = DEFAULT_OP[type]) {
 function defaultCandidate(type) {
   return {
     violation_type: type,
+    candidate_outcome: CREATED,
     data_category: "",
     specific_field: "",
     webform_evidence: [],
@@ -156,13 +181,14 @@ function pairState(policyId) {
 function candidateFor(policyId, type) {
   const pair = pairState(policyId);
   pair[type] ||= defaultCandidate(type);
+  pair[type].candidate_outcome = candidateOutcome(pair[type]);
   pair[type].operations ||= [];
   pair[type].webform_evidence ||= [];
-  if (!pair[type].operations_seeded) {
+  if (pair[type].candidate_outcome === CREATED && !pair[type].operations_seeded) {
     if (!pair[type].operations.length) pair[type].operations = [defaultOperation(type)];
     pair[type].operations_seeded = true;
   }
-  if ((type === "DLC" || type === "GLC") && pair[type].operations.length !== 1) {
+  if (pair[type].candidate_outcome === CREATED && (type === "DLC" || type === "GLC") && pair[type].operations.length !== 1) {
     pair[type].operations = [defaultOperation(type)];
   }
   return pair[type];
@@ -196,12 +222,7 @@ function markEdited(candidate) {
 }
 
 function completedCount() {
-  let count = 0;
-  for (const pair of manifest.pairs) {
-    const byType = state.candidates[pair.policy_id] || {};
-    for (const type of TYPES) if (byType[type]?.complete) count += 1;
-  }
-  return count;
+  return decisionStats(state, manifest, TYPES).complete;
 }
 
 function completedPairCount() {
@@ -209,9 +230,9 @@ function completedPairCount() {
 }
 
 function refreshProgress() {
-  const completed = completedCount();
-  const target = manifest.expected_pair_count * manifest.expected_candidates_per_pair;
-  $("#progressText").textContent = `${completed} of ${target} candidates complete`;
+  const stats = decisionStats(state, manifest, TYPES);
+  const { complete: completed, target } = stats;
+  $("#progressText").textContent = `${completed} of ${target} type decisions complete · ${stats.created} created · ${stats.cannot_create} cannot create`;
   $("#pairProgressText").textContent = `${completedPairCount()} of ${manifest.expected_pair_count} pairs complete`;
   $("#progressFill").style.width = `${(completed / target) * 100}%`;
   $("#finalExportButton").disabled = completed !== target || !isValidAnnotatorId(annotatorId);
@@ -219,7 +240,8 @@ function refreshProgress() {
 
 function updateCandidateState(candidate) {
   const badge = $("#candidateState");
-  badge.textContent = candidate.complete ? "Complete" : "Draft";
+  const outcomeLabel = candidateOutcome(candidate) === CANNOT_CREATE ? " · Cannot create" : "";
+  badge.textContent = `${candidate.complete ? "Complete" : "Draft"}${outcomeLabel}`;
   badge.className = `candidate-state${candidate.complete ? " complete" : ""}`;
 }
 
@@ -394,6 +416,36 @@ function bindDraftInput(control, candidate, fieldName, eventName = "input") {
   return control;
 }
 
+function renderCandidateOutcome(container, candidate) {
+  const fieldset = make("fieldset", { class: "outcome-fieldset" });
+  fieldset.append(make("legend", { text: "Candidate outcome" }));
+  const choices = make("div", { class: "outcome-choices" });
+  [
+    [CREATED, "CREATED", "Create a synthetic violation using the edit controls below."],
+    [CANNOT_CREATE, "CANNOT_CREATE", "No valid standalone violation can be created without inventing evidence."],
+  ].forEach(([value, title, description]) => {
+    const radio = make("input", {
+      type: "radio",
+      name: `candidate-outcome-${currentPair().policy_id}-${activeType}`,
+      value,
+      checked: candidateOutcome(candidate) === value,
+    });
+    radio.addEventListener("change", () => {
+      if (!radio.checked || !setCandidateOutcome(candidate, value)) return;
+      markEdited(candidate);
+      renderCandidateForm();
+    });
+    choices.append(make(
+      "label",
+      { class: "outcome-choice" },
+      radio,
+      make("span", {}, make("strong", { text: title }), make("span", { text: description })),
+    ));
+  });
+  fieldset.append(choices);
+  container.append(fieldset);
+}
+
 function renderCommonFields(container, pair, candidate) {
   const grid = make("div", { class: "form-grid" });
   const category = selectControl(CATEGORIES, candidate.data_category, true);
@@ -413,29 +465,35 @@ function renderCommonFields(container, pair, candidate) {
   const fieldNames = new Set(pair.forms.flatMap((form) => form.fields.map(fieldDisplay)));
   fieldNames.forEach((name) => datalist.append(make("option", { value: name })));
 
-  grid.append(labeledField("Data category", category), labeledField("Specific field", specific));
-  container.append(grid, datalist);
+  grid.append(labeledField("Data category", category));
+  const groundedType = ["SO", "PPM", "ID"].includes(activeType);
+  const showGrounding = candidateOutcome(candidate) === CREATED || groundedType;
+  if (showGrounding) grid.append(labeledField("Specific field", specific));
+  container.append(grid);
+  if (showGrounding) container.append(datalist);
 
-  const checks = make("div", { class: "evidence-checks" });
-  evidenceScreenshots(pair).forEach((screenshot) => {
-    const checkbox = make("input", {
-      type: "checkbox",
-      value: screenshot.screenshot_id,
-      checked: candidate.webform_evidence.includes(screenshot.screenshot_id),
+  if (showGrounding) {
+    const checks = make("div", { class: "evidence-checks" });
+    evidenceScreenshots(pair).forEach((screenshot) => {
+      const checkbox = make("input", {
+        type: "checkbox",
+        value: screenshot.screenshot_id,
+        checked: candidate.webform_evidence.includes(screenshot.screenshot_id),
+      });
+      checkbox.addEventListener("change", () => {
+        const selected = new Set(candidate.webform_evidence);
+        if (checkbox.checked) selected.add(screenshot.screenshot_id);
+        else selected.delete(screenshot.screenshot_id);
+        candidate.webform_evidence = Array.from(selected);
+        markEdited(candidate);
+      });
+      checks.append(make("label", { class: "evidence-check" }, checkbox, make("span", { text: `${screenshot.screenshot_id} · ${screenshot.source_filename}` })));
     });
-    checkbox.addEventListener("change", () => {
-      const selected = new Set(candidate.webform_evidence);
-      if (checkbox.checked) selected.add(screenshot.screenshot_id);
-      else selected.delete(screenshot.screenshot_id);
-      candidate.webform_evidence = Array.from(selected);
-      markEdited(candidate);
-    });
-    checks.append(make("label", { class: "evidence-check" }, checkbox, make("span", { text: `${screenshot.screenshot_id} · ${screenshot.source_filename}` })));
-  });
-  const requirement = ["SO", "PPM", "ID"].includes(activeType) ? "required" : "optional";
-  container.append(labeledField(`Webform screenshot evidence (${requirement})`, checks));
+    const requirement = groundedType ? "required" : "optional";
+    container.append(labeledField(`Webform screenshot evidence (${requirement})`, checks));
+  }
 
-  if (activeType === "PPM") {
+  if (activeType === "PPM" && candidateOutcome(candidate) === CREATED) {
     const strategy = selectControl(PPM_SUBSTRATEGIES, candidate.ppm_substrategy);
     strategy.addEventListener("change", () => {
       candidate.ppm_substrategy = strategy.value;
@@ -687,7 +745,7 @@ function renderSharedMetadata(container, candidate) {
   grid.append(labeledField("Accompanied violation", accompanied), labeledField("Edit summary", summary));
   container.append(grid);
 
-  const notesOptions = ["", "the edit(s) unavoidably result in multiple violations", "cannot create a violation", "others"];
+  const notesOptions = ["", "the edit(s) unavoidably result in multiple violations", "others"];
   const notes = selectControl(notesOptions, candidate.notes_for_reviewer);
   notes.options[0].textContent = "— select if needed —";
   notes.addEventListener("change", () => {
@@ -698,6 +756,21 @@ function renderSharedMetadata(container, candidate) {
   explanations.value = candidate.explanations;
   bindDraftInput(explanations, candidate, "explanations");
   container.append(labeledField("Notes for reviewer", notes), labeledField("Explanation", explanations));
+}
+
+function renderCannotCreateFields(container, candidate) {
+  container.append(make(
+    "div",
+    { class: "cannot-create-notice" },
+    make("strong", { text: "No synthetic edit will be generated." }),
+    "Use this exceptional outcome only when a valid standalone violation cannot be created from the available policy and webform evidence. Difficulty or the need for multiple legitimate operations is not enough.",
+  ));
+  const explanation = make("textarea", {
+    placeholder: "Required: explain why this violation type cannot be created without inventing evidence",
+  });
+  explanation.value = candidate.explanations;
+  bindDraftInput(explanation, candidate, "explanations");
+  container.append(labeledField("Why this type cannot be created (required)", explanation));
 }
 
 function renderCandidateForm() {
@@ -711,11 +784,18 @@ function renderCandidateForm() {
 
   const form = $("#candidateForm");
   form.replaceChildren();
+  renderCandidateOutcome(form, candidate);
   renderCommonFields(form, pair, candidate);
-  if (activeType === "DLC" || activeType === "GLC") renderContradictionForm(form, candidate);
-  else renderOperations(form, candidate);
-  renderSharedMetadata(form, candidate);
-  drawPreview();
+  if (candidateOutcome(candidate) === CANNOT_CREATE) {
+    renderCannotCreateFields(form, candidate);
+    $("#previewPanel").hidden = true;
+  } else {
+    if (activeType === "DLC" || activeType === "GLC") renderContradictionForm(form, candidate);
+    else renderOperations(form, candidate);
+    renderSharedMetadata(form, candidate);
+    $("#previewPanel").hidden = false;
+    drawPreview();
+  }
 
   const enabled = isValidAnnotatorId(annotatorId) && Boolean(currentPolicyText);
   if (!enabled) form.prepend(make("div", {
@@ -767,40 +847,23 @@ function validateAnchorForOperation(text, operation) {
 }
 
 function validateCandidate(pair, type, candidate, policyText) {
-  const errors = [];
-  if (!candidate.data_category) errors.push("Select a data category.");
-  if (["SO", "PPM", "ID"].includes(type)) {
-    if (!candidate.specific_field.trim()) errors.push("Enter the exact collected field.");
-    if (!candidate.webform_evidence.length) errors.push("Select at least one webform screenshot.");
+  if (candidateOutcome(candidate) === CREATED && (type === "DLC" || type === "GLC")) {
+    const operation = candidate.operations[0];
+    if (operation?.op_type === "ADD") syncContradictionAdd(candidate, operation);
   }
-  const validEvidence = new Set(evidenceScreenshots(pair).map((shot) => shot.screenshot_id));
-  if (candidate.webform_evidence.some((id) => !validEvidence.has(id))) errors.push("A selected screenshot is not valid for this policy pair.");
-  if (type === "PPM" && !PPM_SUBSTRATEGIES.includes(candidate.ppm_substrategy)) errors.push("Select a PPM sub-strategy.");
-
-  if (type === "DLC" || type === "GLC") {
-    try {
-      exportAnchor(policyText, candidate.conflicting_phrase, candidate.conflict_start_utf16, candidate.conflict_end_utf16);
-    } catch (error) {
-      errors.push(`Conflicting phrase: ${error.message}.`);
-    }
-    if (candidate.operations.length !== 1) errors.push("A contradiction candidate must contain exactly one operation.");
-  } else if (!candidate.operations.length) {
-    errors.push("Add at least one edit operation.");
-  }
-
-  candidate.operations.forEach((operation, index) => {
-    if (!OPS_BY_TYPE[type].includes(operation.op_type)) errors.push(`Op ${index + 1}: invalid operation type.`);
-    if (type === "DLC" || type === "GLC") {
-      if (operation.op_type === "ADD") syncContradictionAdd(candidate, operation);
-    }
-    const anchorError = validateAnchorForOperation(policyText, operation);
-    if (anchorError) errors.push(`Op ${index + 1}: ${anchorError}.`);
-    if (operation.op_type === "ADD" && !operation.after_snippet.trim()) errors.push(`Op ${index + 1}: write the new snippet.`);
-    if (operation.op_type === "MODIFY" && !operation.after_snippet.trim()) errors.push(`Op ${index + 1}: write the replacement snippet.`);
-    if (operation.op_type === "REMOVE" && operation.after_snippet) errors.push(`Op ${index + 1}: REMOVE must have an empty after snippet.`);
-    if (operation.op_type === "ADD" && !bucketsFor(type).includes(operation.location_bucket)) errors.push(`Op ${index + 1}: select a valid location bucket.`);
+  return validateCandidateModel({
+    pair,
+    type,
+    candidate,
+    allowedOperations: OPS_BY_TYPE[type],
+    allowedBuckets: bucketsFor(type),
+    ppmSubstrategies: PPM_SUBSTRATEGIES,
+    validateAnchor: (snippet, start, end) => validateAnchorForOperation(policyText, {
+      before_snippet: snippet,
+      start_utf16: start,
+      end_utf16: end,
+    }),
   });
-  return errors;
 }
 
 async function completeCurrentCandidate() {
@@ -821,7 +884,8 @@ async function completeCurrentCandidate() {
   renderCandidateTabs();
   updateCandidateState(candidate);
   refreshProgress();
-  showCandidateMessage(`${activeType} is complete for ${pair.policy_id}.`, "success");
+  const outcome = candidateOutcome(candidate) === CANNOT_CREATE ? "CANNOT_CREATE" : "CREATED";
+  showCandidateMessage(`${activeType} decision is complete as ${outcome} for ${pair.policy_id}.`, "success");
 }
 
 function activateAnnotator(value) {
@@ -858,12 +922,13 @@ function backupDraft() {
     return;
   }
   const backup = {
-    backup_schema_version: 1,
+    backup_schema_version: BACKUP_SCHEMA_VERSION,
     bundle_id: manifest.bundle_id,
     bundle_version: manifest.bundle_version,
     assignment_id: manifest.assignment_id,
     batch_id: manifest.batch_id,
     annotator_id: annotatorId,
+    pair_policy_hashes: pairPolicyHashes(manifest),
     exported_at: new Date().toISOString(),
     state,
   };
@@ -874,13 +939,7 @@ function backupDraft() {
 
 async function restoreDraft(file) {
   if (!isValidAnnotatorId(annotatorId)) throw new Error("Enter the annotation name for this backup before restoring it");
-  const backup = JSON.parse(await file.text());
-  if (backup.backup_schema_version !== 1) throw new Error("Unsupported backup format");
-  for (const key of ["bundle_id", "bundle_version", "assignment_id", "batch_id"]) {
-    if (backup[key] !== manifest[key]) throw new Error(`Backup ${key} does not match this calibration bundle`);
-  }
-  if (backup.annotator_id !== annotatorId) throw new Error("Backup annotation name does not match the entered annotation name");
-  if (!backup.state || typeof backup.state.candidates !== "object") throw new Error("Backup state is missing or invalid");
+  const backup = upgradeBackup(JSON.parse(await file.text()), manifest, annotatorId, TYPES);
   state = backup.state;
   saveState();
   await renderPair();
@@ -894,21 +953,45 @@ function candidateId(pairId, type) {
 async function buildCsv(status) {
   const rows = [];
   const invalid = [];
-  let candidateTotal = 0;
+  let decisionTotal = 0;
+  let createdTotal = 0;
+  let cannotCreateTotal = 0;
   for (const pair of manifest.pairs) {
-    const policyText = await policyTextFor(pair);
+    let policyText = null;
     for (const type of TYPES) {
       const candidate = state.candidates[pair.policy_id]?.[type];
       if (!candidate?.complete) continue;
-      const errors = validateCandidate(pair, type, candidate, policyText);
+      if (candidateOutcome(candidate) === CREATED && policyText === null) policyText = await policyTextFor(pair);
+      const errors = validateCandidate(pair, type, candidate, policyText || "");
       if (errors.length) {
         candidate.complete = false;
         candidate.completed_at = null;
         invalid.push(`${pair.policy_id} ${type}: ${errors.join(" ")}`);
         continue;
       }
-      candidateTotal += 1;
+      decisionTotal += 1;
       const identifier = candidateId(pair.policy_id, type);
+      const base = {
+        bundle_id: manifest.bundle_id,
+        bundle_version: manifest.bundle_version,
+        assignment_id: manifest.assignment_id,
+        batch_id: manifest.batch_id,
+        policy_id: pair.policy_id,
+        source_file: pair.policy.source_filename,
+        website: pair.website,
+        url: pair.policy_url,
+        violation_type: type,
+        candidate_id: identifier,
+        policy_sha256: pair.policy.sha256,
+        author_id: annotatorId,
+        status,
+      };
+      if (candidateOutcome(candidate) === CANNOT_CREATE) {
+        rows.push(buildCannotCreateRow({ base, candidate, type }));
+        cannotCreateTotal += 1;
+        continue;
+      }
+      createdTotal += 1;
       for (let index = 0; index < candidate.operations.length; index += 1) {
         const operation = candidate.operations[index];
         let beforeSnippet = operation.before_snippet;
@@ -924,16 +1007,8 @@ async function buildCsv(status) {
           ? candidate.conflicting_phrase
           : type === "ID" ? candidate.operations[0]?.before_snippet || "" : "";
         rows.push({
-          bundle_id: manifest.bundle_id,
-          bundle_version: manifest.bundle_version,
-          assignment_id: manifest.assignment_id,
-          batch_id: manifest.batch_id,
-          policy_id: pair.policy_id,
-          source_file: pair.policy.source_filename,
-          website: pair.website,
-          url: pair.policy_url,
-          violation_type: type,
-          candidate_id: identifier,
+          ...base,
+          candidate_outcome: CREATED,
           synthetic_id: identifier,
           op_index: index + 1,
           op_type: operation.op_type,
@@ -941,7 +1016,6 @@ async function buildCsv(status) {
           insertion_location_hint: operation.insertion_location_hint,
           notes_for_reviewer: candidate.notes_for_reviewer,
           explanations: candidate.explanations,
-          policy_sha256: pair.policy.sha256,
           before_snippet_sha256: await sha256Text(beforeSnippet),
           after_snippet_sha256: await sha256Text(operation.after_snippet),
           match_found: "True",
@@ -958,8 +1032,6 @@ async function buildCsv(status) {
           original_conflict_snippet: originalConflict,
           location_bucket: operation.location_bucket,
           accompanied_violation: candidate.accompanied_violation,
-          author_id: annotatorId,
-          status,
         });
       }
     }
@@ -968,10 +1040,10 @@ async function buildCsv(status) {
     saveState();
     renderCandidateTabs();
     refreshProgress();
-    throw new Error(`Export stopped because completed anchors failed revalidation: ${invalid.join(" | ")}`);
+    throw new Error(`Export stopped because completed decisions failed revalidation: ${invalid.join(" | ")}`);
   }
   const csv = [CSV_COLUMNS.join(","), ...rows.map((row) => CSV_COLUMNS.map((column) => csvCell(row[column])).join(","))].join("\r\n") + "\r\n";
-  return { csv, rowCount: rows.length, candidateTotal };
+  return { csv, rowCount: rows.length, decisionTotal, createdTotal, cannotCreateTotal };
 }
 
 async function exportCsv(finalSubmission) {
@@ -980,27 +1052,27 @@ async function exportCsv(finalSubmission) {
     return;
   }
   const completed = completedCount();
-  const target = manifest.expected_pair_count * manifest.expected_candidates_per_pair;
+  const target = decisionTarget(manifest);
   if (!completed) {
-    setGlobalStatus("No completed candidates are available for the working CSV.");
+    setGlobalStatus("No completed type decisions are available for the working CSV.");
     return;
   }
   if (finalSubmission && completed !== target) {
-    setGlobalStatus(`Final CSV remains locked until all ${target} candidates are complete.`);
+    setGlobalStatus(`Final CSV remains locked until all ${target} type decisions are complete.`);
     return;
   }
   try {
-    setGlobalStatus("Revalidating anchors and preparing cumulative CSV…");
+    setGlobalStatus("Revalidating completed decisions and preparing cumulative CSV…");
     const status = finalSubmission ? "submitted" : "draft";
     const result = await buildCsv(status);
-    if (finalSubmission && result.candidateTotal !== target) throw new Error(`Final export contains ${result.candidateTotal}, not ${target}, candidates`);
+    if (finalSubmission && result.decisionTotal !== target) throw new Error(`Final export contains ${result.decisionTotal}, not ${target}, type decisions`);
     const filename = `VALID-syn_${manifest.batch_id}_author-${annotatorId}_v${manifest.bundle_version}_${status}_${utcStamp()}.csv`;
     downloadBlob(new Blob([result.csv], { type: "text/csv;charset=utf-8" }), filename);
     if (finalSubmission) {
       state.submitted_at = new Date().toISOString();
       saveState();
     }
-    setGlobalStatus(`Downloaded ${status} CSV: ${result.candidateTotal} candidates across ${result.rowCount} operation rows.`);
+    setGlobalStatus(`Downloaded ${status} CSV: ${result.decisionTotal} decisions (${result.createdTotal} created, ${result.cannotCreateTotal} cannot create) across ${result.rowCount} CSV rows.`);
   } catch (error) {
     setGlobalStatus(error.message);
   }
@@ -1038,7 +1110,7 @@ $("#annotatorId").addEventListener("input", (event) => {
   renderCandidateTabs();
   renderCandidateForm();
   refreshProgress();
-  setGlobalStatus("Click Start annotation to activate this code.");
+  setGlobalStatus("Click Start annotation to activate this annotation name.");
 });
 $("#annotatorId").addEventListener("keydown", (event) => {
   if (event.key === "Enter") activateAnnotator(event.target.value);
@@ -1053,13 +1125,13 @@ $("#nextPair").addEventListener("click", async () => {
 });
 $("#completeCandidate").addEventListener("click", completeCurrentCandidate);
 $("#clearCandidate").addEventListener("click", () => {
-  if (!confirm(`Clear the ${activeType} candidate for ${currentPair().policy_id}? This cannot be undone unless you have a backup.`)) return;
+  if (!confirm(`Clear the ${activeType} decision for ${currentPair().policy_id}? This cannot be undone unless you have a backup.`)) return;
   state.candidates[currentPair().policy_id][activeType] = defaultCandidate(activeType);
   saveState();
   renderCandidateTabs();
   renderCandidateForm();
   refreshProgress();
-  showCandidateMessage("Candidate cleared.", "success");
+  showCandidateMessage("Decision cleared.", "success");
 });
 $("#backupButton").addEventListener("click", backupDraft);
 $("#restoreButton").addEventListener("click", () => $("#restoreInput").click());

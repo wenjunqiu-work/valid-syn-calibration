@@ -1,0 +1,66 @@
+{
+  "backup_schema_version": 1,
+  "bundle_id": "VALID-syn-calibration",
+  "bundle_version": "1.0.0",
+  "assignment_id": "VALID-CAL-001",
+  "batch_id": "VALID-BATCH-001",
+  "annotator_id": "SAMPLE_ANNOTATION",
+  "exported_at": "2026-08-17T00:00:00.000Z",
+  "state": {
+    "schema_version": 1,
+    "bundle_id": "VALID-syn-calibration",
+    "bundle_version": "1.0.0",
+    "assignment_id": "VALID-CAL-001",
+    "batch_id": "VALID-BATCH-001",
+    "annotator_id": "SAMPLE_ANNOTATION",
+    "updated_at": "2026-08-17T00:00:00.000Z",
+    "submitted_at": null,
+    "candidates": {
+      "VALID-RAW-043": {
+        "SO": {
+          "violation_type": "SO",
+          "data_category": "contact_data",
+          "specific_field": "Email",
+          "webform_evidence": ["VALID-RAW-043-F1-S0-FULL"],
+          "ppm_substrategy": "",
+          "conflicting_phrase": "",
+          "conflict_start_utf16": -1,
+          "conflict_end_utf16": -1,
+          "edit_summary": "legacy summary",
+          "accompanied_violation": "",
+          "notes_for_reviewer": "cannot create a violation",
+          "explanations": "Every email disclosure is inseparable from a second required disclosure.",
+          "operations": [{
+            "op_type": "REMOVE",
+            "before_snippet": "preserved legacy anchor",
+            "after_snippet": "",
+            "start_utf16": 10,
+            "end_utf16": 33,
+            "location_bucket": "",
+            "insertion_location_hint": ""
+          }],
+          "operations_seeded": true,
+          "complete": true,
+          "completed_at": "2026-08-17T00:00:00.000Z"
+        },
+        "PPM": {
+          "violation_type": "PPM",
+          "data_category": "contact_data",
+          "specific_field": "Email",
+          "webform_evidence": ["VALID-RAW-043-F1-S0-FULL"],
+          "ppm_substrategy": "SPECIFIC_FIELD_DENIAL",
+          "conflicting_phrase": "",
+          "conflict_start_utf16": -1,
+          "conflict_end_utf16": -1,
+          "edit_summary": "",
+          "accompanied_violation": "",
+          "notes_for_reviewer": "the edit(s) unavoidably result in multiple violations",
+          "explanations": "",
+          "operations": [],
+          "complete": false,
+          "completed_at": null
+        }
+      }
+    }
+  }
+}

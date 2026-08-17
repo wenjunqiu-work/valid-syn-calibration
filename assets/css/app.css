@@ -136,6 +136,16 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
 .candidate-tab.active { border-color: var(--teal); color: var(--teal-dark); box-shadow: 0 0 0 3px rgba(19,124,120,.10); }
 .candidate-tab.complete::before { background: var(--green); }
 .candidate-hint { margin: 9px 0 13px; padding: 10px 11px; border-left: 3px solid var(--amber); background: #fff8e9; color: #5d4a25; font-size: 12px; }
+.outcome-fieldset { margin: 11px 0 15px; padding: 12px; border: 1px solid var(--line); border-radius: 11px; }
+.outcome-fieldset legend { padding: 0 5px; color: var(--ink); font-weight: 900; }
+.outcome-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.outcome-choice { display: flex; align-items: flex-start; gap: 8px; padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: #fbfaf7; cursor: pointer; color: var(--ink); }
+.outcome-choice:has(input:checked) { border-color: var(--teal); background: #edf5f3; box-shadow: 0 0 0 2px rgba(19,124,120,.08); }
+.outcome-choice input { width: auto; margin-top: 3px; }
+.outcome-choice strong { display: block; }
+.outcome-choice span { display: block; color: var(--muted); font-size: 10px; font-weight: 500; }
+.cannot-create-notice { margin: 12px 0; padding: 12px; border: 1px solid rgba(230,170,60,.65); border-radius: 10px; background: #fff7e7; color: #694d16; }
+.cannot-create-notice strong { display: block; margin-bottom: 3px; }
 .field-label { display: grid; gap: 4px; margin: 11px 0; color: var(--muted); font-size: 11px; font-weight: 800; }
 .field-label > span, .field-label > label { letter-spacing: .02em; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -198,6 +208,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shado
   .pair-heading { flex-direction: column; }
   .candidate-tabs { grid-template-columns: repeat(5, minmax(58px, 1fr)); overflow-x: auto; }
   .form-grid { grid-template-columns: 1fr; gap: 0; }
+  .outcome-choices { grid-template-columns: 1fr; }
   .screenshot-grid { grid-template-columns: 1fr; }
   .operation-head { grid-template-columns: auto 1fr auto; }
   .operation-mode { grid-column: 2; }

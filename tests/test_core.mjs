@@ -28,9 +28,9 @@ assert.equal(isValidAnnotatorId("a@example.com"), false);
 
 const key = storageKey({
   bundle_id: "VALID-syn-calibration",
-  bundle_version: "1.0.0",
+  bundle_version: "1.1.0",
   assignment_id: "VALID-CAL-001",
 }, "A01");
-assert.equal(key, "validsyn::VALID-syn-calibration::1.0.0::VALID-CAL-001::A01");
+assert.equal(key, "validsyn::VALID-syn-calibration::1.1.0::VALID-CAL-001::A01");
 
 console.log(JSON.stringify({ ok: true, unicode_offsets: exported, csv_quoting: true, annotator_validation: true }, null, 2));

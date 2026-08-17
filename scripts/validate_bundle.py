@@ -37,7 +37,9 @@ def main() -> None:
         errors.append("Manifest pair order/identity is incorrect")
     if manifest.get("bundle_id") != "VALID-syn-calibration":
         errors.append("Unexpected bundle_id")
-    if manifest.get("bundle_version") != "1.0.0":
+    if manifest.get("schema_version") != 2:
+        errors.append("Unexpected manifest schema_version")
+    if manifest.get("bundle_version") != "1.1.0":
         errors.append("Unexpected bundle_version")
     if manifest.get("assignment_id") != "VALID-CAL-001":
         errors.append("Unexpected assignment_id")
@@ -45,6 +47,10 @@ def main() -> None:
         errors.append("Unexpected batch_id")
     if manifest.get("violation_types") != ["SO", "PPM", "ID", "DLC", "GLC"]:
         errors.append("Unexpected violation type list")
+    if manifest.get("expected_decisions_per_pair") != 5:
+        errors.append("Unexpected expected_decisions_per_pair")
+    if manifest.get("expected_candidates_per_pair") != 5:
+        errors.append("Deprecated expected_candidates_per_pair compatibility alias is missing")
 
     screenshot_count = 0
     screenshot_ids: set[str] = set()
@@ -117,7 +123,7 @@ def main() -> None:
         "pairs": len(pairs),
         "policies": len(pairs),
         "screenshots": screenshot_count,
-        "candidate_target": len(pairs) * len(manifest.get("violation_types") or []),
+        "decision_target": len(pairs) * len(manifest.get("violation_types") or []),
         "errors": errors,
     }
     print(json.dumps(report, indent=2))

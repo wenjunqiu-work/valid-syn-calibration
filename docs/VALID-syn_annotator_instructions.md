@@ -11,7 +11,7 @@ In this task, you will be given 50 websites along with their privacy policies. F
 2. a list of pre-detected data that may be collected by this website, 
 3. screenshot(s) for signup/registration/contact/subscription page(s). 
 
-By definition, there are five types of privacy violations we focus on. Your task is to generate 1 violation per type (a total of 5) for each policy-website pair. 
+By definition, there are five types of privacy violations we focus on. Your task is to make one decision per type (a total of 5) for each policy-website pair. Normally, the outcome is `CREATED` and you generate the violation. In the exceptional case where no valid standalone violation can be created from the available evidence, use `CANNOT_CREATE` as described below.
 
 To start the task, click on the given html file (or open it with your browser) and you will see the annotation tool. When constructing violations, please make use of the **observable evidence** (the policy text + the site's webform screenshots). The list of collected data is there to help you, but it is **NOT** 100% guranteed to be accurate, so please check against the webform screenshots to confirm. **Never from guesses about a company's back-end**.
 
@@ -36,7 +36,7 @@ For each type: **Definition (+ example) · How to construct (+ example) · Where
 
 ### ID - Implicit Disclosure
 - **Definition.** The policy's own wording **implies** it handles *X* - often via verbs like *protect, retain, secure, store, share, verify, authenticate, prevent fraud* - but **never states that X is collected**, while the site does collect *X*. *Ex: "Registration is limited to users aged 13 or older" implies age/date-of-birth is used, but the policy never discloses collecting a birthdate - and the form has a DOB field.*
-- **How to construct.** Insert (or anchor to) a sentence that **presupposes collection of X through such a verb**, while making sure the policy never explicitly lists *X* as collected. Must anchor to a **specific implying sentence** (`original_conflict_snippet`); if no such sentence can plausibly exist, don't make an ID, and note this in `notes_for_reviewer`. If  
+- **How to construct.** Insert or modify a sentence so that the newly written text **presupposes collection of X through such a verb**, while making sure the policy never explicitly lists *X* as collected. The captured `before_snippet` is the real policy insertion or replacement anchor; the newly written implying sentence belongs in `after_snippet`. If no valid ID can be created from the available policy and webform evidence, select `candidate_outcome=CANNOT_CREATE` and explain why instead of fabricating an anchor or edit.
 - **Placement.** Sections about **security, support, fraud prevention, analytics, payments, retention, or service operation**. Usually **INSERT**.
 - **Example:** *add under Security "We take steps to protect the payment-card details you provide," while payment cards are never listed among collected data (and checkout collects a card).*
  
@@ -50,6 +50,14 @@ For each type: **Definition (+ example) · How to construct (+ example) · Where
 - **Definition.** A **broad** statement conflicts with a **narrower/specific** one (strict superset). *Ex: "We do not collect demographic information" ↔ "We collect your birthdate for age verification" (birthdate ⊂ demographic).*
 - **How to construct.** Anchor to a real specific admission **or** broad denial (`conflicting_phrase` **required, non-null**), then add the conflicting statement at the **other** granularity. The broad statement must be true in a world **without** the specific practice. *Ex: policy admits "We collect your email address" → insert "We collect no contact information."*
 - **Placement.** Near the anchor or a different relevant section.
+
+### When a type cannot honestly be created
+- `CREATED` is the default outcome. Use it whenever you can construct a valid candidate, including candidates that are difficult or require multiple legitimate edit operations.
+- `CANNOT_CREATE` is an exceptional decision available for SO, PPM, ID, DLC, and GLC. Use it only when no valid standalone violation of that type can be created from the available policy and observable webform evidence without inventing an anchor, practice, or collected field.
+- Every `CANNOT_CREATE` decision requires a `data_category` and a clear explanation of why the type is infeasible.
+- For SO, PPM, and ID, also identify the real `specific_field` and select at least one valid webform screenshot. These fields show that the collection practice is real even though an honest synthetic edit cannot be created.
+- For DLC and GLC, a specific field and screenshot are optional. Do not fabricate them when the infeasibility is entirely within the policy text.
+- Do not add an edit operation, synthetic text, anchor, conflicting phrase, placement, or PPM sub-strategy for a `CANNOT_CREATE` decision. The tool exports one metadata-only row with `op_index=0`.
 
 <!-- ### FN - Fragmented Notice
 - **Definition.** A material disclosure of *X* exists **only on a separate surface** (help page, FAQ, tooltip, modal, regional or service-specific notice) that a user reaches through the **form/UI**, and the **main policy does not adequately integrate it** - so a user reading only the policy stays uninformed. **Not** a contradiction; **not** a pure omission (a separate surface must exist); **not** a proper cross-reference where the policy already summarizes the practice.
@@ -120,6 +128,7 @@ After each edit, scan the original policy for any possible overlaps.
 - **Spread edits** across the document; avoid stacking several in one paragraph.
 - **Real.** Don't fabricate practices implausible for the domain (e.g., no biometric collection for a static blog). Keep the policy's tone, **modality** ("we may…"), terminology, and formatting. The result should **read like authentic policy language**. Never write "[VIOLATION]", "this contradicts", etc in the policy.
 - Make sure to save the annotations by clicking the **Export CSV** button on the top right (See below).
+- **Outcome-aware export.** Created candidates export one row per edit operation with `candidate_outcome=CREATED` and operation indexes beginning at 1. A `CANNOT_CREATE` decision exports exactly one metadata-only row with `candidate_outcome=CANNOT_CREATE`, `op_index=0`, and blank synthetic-edit and anchor fields. Any downstream assembler must apply only rows whose `candidate_outcome` is `CREATED`.
 
   ![alt text](image.png)
 

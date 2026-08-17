@@ -24,6 +24,8 @@ Run the bundled integrity and Unicode-offset checks from the repository root:
 ```bash
 python3 scripts/validate_bundle.py
 node tests/test_core.mjs
+node tests/test_candidate_outcomes.mjs
+node tests/test_export_schema.mjs
 node tests/test_ui_contract.mjs
 ```
 
@@ -40,16 +42,18 @@ The application uses only relative URLs, so it works both at a domain root and a
 ## Annotation and downloads
 
 - Every input change is saved in browser storage under bundle version, assignment, and annotation name.
-- Editing a completed candidate returns it to draft.
-- **Backup draft** downloads every partial field as JSON; **Restore draft** imports a matching backup.
-- **Working CSV** is cumulative and contains every completed candidate so far.
-- **Final CSV** unlocks only when all 25 candidates are complete.
-- A candidate may have multiple operation rows. Count candidates by `candidate_id`, not by CSV row count.
+- Every type decision has a `CREATED` (default) or exceptional `CANNOT_CREATE` outcome. Editing a completed decision or switching its outcome returns it to draft; hidden CREATED operations are preserved when switching outcomes.
+- `CANNOT_CREATE` always requires a data category and explanation. SO, PPM, and ID also require a specific field and screenshot evidence; DLC and GLC do not.
+- **Backup draft** downloads every partial field as schema-2 JSON; **Restore draft** imports matching schema-1 or schema-2 backups. Bundle `1.0.0` browser drafts migrate automatically to `1.1.0` without deleting the old storage entry.
+- **Working CSV** is cumulative and contains every completed type decision so far.
+- **Final CSV** unlocks only when all 25 type decisions are complete, regardless of their mix of outcomes.
+- A CREATED candidate may have multiple operation rows. A CANNOT_CREATE decision has one metadata-only row with `op_index=0`, blank `synthetic_id`, and blank edit/anchor fields. Count decisions by `candidate_id`, not by CSV row count.
+- Downstream policy assemblers must process only rows with `candidate_outcome=CREATED`; no assembler is included in this static site.
 - The operation schema retains `op_type` and intentionally has no redundant operation-mode column.
 
 ## Frozen bundle and regeneration
 
-`data/manifest.json` is the public, relative-path source of truth. It includes bundle identity, source metadata, form fields, collection timestamps, file sizes, and SHA-256 hashes. It does not contain local machine paths.
+`data/manifest.json` is the public, relative-path source of truth. Manifest schema 2 identifies bundle `1.1.0`, declares five expected type decisions per pair, and retains `expected_candidates_per_pair` only as a deprecated compatibility alias. The manifest also includes source metadata, form fields, collection timestamps, file sizes, and SHA-256 hashes. It does not contain local machine paths.
 
 To rebuild from the parent `150-raw-pair.csv` and re-copy the original evidence:
 
@@ -65,9 +69,9 @@ The builder fails unless all five selected IDs exist, all source files exist, th
 - `index.html` and `assets/`: the static annotation application and evidence images
 - `data/manifest.json`: frozen assignment and evidence metadata
 - `data/policies/`: exact selected policy bytes used for offsets and later application
-- `docs/`: unchanged full instructions plus a pilot quick start
+- `docs/`: the canonical outcome-aware instructions plus a pilot quick start
 - `scripts/`: deterministic bundle builder and integrity validator
-- `tests/`: dependency-free offset and CSV helper checks
+- `tests/`: dependency-free offset, migration, outcome-validation, CSV, and interface-contract checks
 
 ## Future production work
 

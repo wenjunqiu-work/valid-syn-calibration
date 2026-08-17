@@ -12,6 +12,9 @@ assert.match(index, /<label for="annotatorId">Annotation name<\/label>/);
 assert.match(index, /placeholder="Enter your annotation name"/);
 assert.doesNotMatch(index, /annotatorHelp|aria-describedby="annotatorHelp"/);
 assert.match(index, /id="selectionStatus"/);
+assert.match(index, /id="previewPanel"/);
+assert.match(index, /Mark decision complete/);
+assert.match(index, /type decisions complete/);
 assert.match(app, /class: "locked-notice"/);
 assert.match(app, /document\.addEventListener\("selectionchange", rememberPolicySelection\)/);
 assert.match(app, /return \{ \.\.\.lastPolicySelection \}/);
@@ -23,6 +26,20 @@ assert.match(app, /async function restoreDraft\(file\)/);
 assert.match(app, /async function exportCsv\(finalSubmission\)/);
 assert.match(app, /annotator_id: annotatorId/);
 assert.match(app, /author_id: annotatorId/);
+assert.match(app, /candidate_outcome: CREATED/);
+assert.match(app, /buildCannotCreateRow/);
+assert.match(app, /candidateOutcome\(candidate\) === CANNOT_CREATE/);
+assert.match(app, /previewPanel"\)\.hidden = true/);
+assert.match(app, /expected_decisions_per_pair|decisionTarget\(manifest\)/);
+assert.match(app, /pair_policy_hashes: pairPolicyHashes\(manifest\)/);
+assert.match(app, /upgradeBackup/);
+assert.match(app, /upgradeState/);
+assert.match(app, /localStorage\.getItem\(legacyKey\)/);
+assert.match(app, /localStorage\.setItem\(key, JSON\.stringify\(migrated\)\)/);
+assert.doesNotMatch(app, /removeItem\(legacyKey\)/);
+assert.match(css, /@media \(max-width: 1040px\)/);
+assert.match(css, /@media \(max-width: 700px\)/);
+assert.match(css, /\.outcome-choices \{ grid-template-columns: 1fr; \}/);
 assert.doesNotMatch(index, /policySearch|searchButton|searchCount|searchResults|Find a phrase or data type/);
 assert.doesNotMatch(app, /runSearch|addOperationFromSearch|useSearchAsConflict|useSearchAsModification|policySearch|searchButton|searchCount|searchResults/);
 assert.doesNotMatch(css, /search-row|search-results|search-result|result-actions/);
@@ -43,6 +60,7 @@ const obsoleteCodePhrases = [
   ["pseudonymous", " code"].join(""),
   ["Do not enter your name", " or email"].join(""),
   ["names", " or email addresses"].join(""),
+  ["activate this", " code"].join(""),
 ];
 for (const content of [index, app, quickStart, readme]) {
   for (const phrase of obsoleteCodePhrases) assert.ok(!content.toLowerCase().includes(phrase.toLowerCase()));
@@ -63,4 +81,8 @@ console.log(JSON.stringify({
   native_find_documented: true,
   operation_specific_capture_labels: true,
   contradiction_label_preserved: true,
+  cannot_create_outcome: true,
+  decision_progress_wording: true,
+  annotation_name_activation_wording: true,
+  desktop_and_narrow_layout_contracts: true,
 }, null, 2));

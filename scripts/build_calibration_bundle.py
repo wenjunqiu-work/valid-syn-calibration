@@ -278,12 +278,13 @@ def main() -> None:
     rows = load_rows(args.source_csv.resolve())
     pairs = [build_pair(row, site_root) for row in rows]
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "bundle_id": "VALID-syn-calibration",
-        "bundle_version": "1.0.0",
+        "bundle_version": "1.1.0",
         "assignment_id": "VALID-CAL-001",
         "batch_id": "VALID-BATCH-001",
         "expected_pair_count": 5,
+        "expected_decisions_per_pair": 5,
         "expected_candidates_per_pair": 5,
         "violation_types": ["SO", "PPM", "ID", "DLC", "GLC"],
         "pairs": pairs,

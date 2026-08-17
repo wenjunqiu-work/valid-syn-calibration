@@ -1,7 +1,7 @@
 export const ANNOTATOR_PATTERN = /^[A-Za-z0-9_-]{2,32}$/;
 export const CSV_COLUMNS = [
   "bundle_id", "bundle_version", "assignment_id", "batch_id",
-  "policy_id", "source_file", "website", "url", "violation_type", "candidate_id", "synthetic_id",
+  "policy_id", "source_file", "website", "url", "violation_type", "candidate_id", "candidate_outcome", "synthetic_id",
   "op_index", "op_type", "edit_summary", "insertion_location_hint", "notes_for_reviewer", "explanations", "policy_sha256",
   "before_snippet_sha256", "after_snippet_sha256", "match_found", "match_start", "match_end", "before_snippet",
   "after_snippet", "error", "data_category", "specific_field", "webform_evidence", "ppm_substrategy",

@@ -38,7 +38,7 @@
 
   <section class="progress-strip" aria-label="Assignment progress">
     <div class="progress-copy">
-      <strong id="progressText">0 of 25 candidates complete</strong>
+      <strong id="progressText">0 of 25 type decisions complete · 0 created · 0 cannot create</strong>
       <span id="pairProgressText">Pair 1 of 5</span>
     </div>
     <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
@@ -107,12 +107,12 @@
         <div id="candidateForm"></div>
         <div id="candidateMessage" class="message" role="status" aria-live="polite"></div>
         <div class="candidate-actions">
-          <button class="button primary" id="completeCandidate" type="button">Mark candidate complete</button>
-          <button class="button danger-ghost" id="clearCandidate" type="button">Clear candidate</button>
+          <button class="button primary" id="completeCandidate" type="button">Mark decision complete</button>
+          <button class="button danger-ghost" id="clearCandidate" type="button">Clear decision</button>
         </div>
       </article>
 
-      <article class="panel preview-panel">
+      <article class="panel preview-panel" id="previewPanel">
         <div class="section-heading">
           <div>
             <span class="eyebrow">Quality check</span>
@@ -133,10 +133,11 @@
       <h3>Five-pair quick start</h3>
       <ol>
         <li>Enter your annotation name, then click Start annotation.</li>
-        <li>For each of five website–policy pairs, complete one SO, PPM, ID, DLC, and GLC candidate.</li>
-        <li>Each candidate may contain multiple edit operations. Candidate count and CSV row count may differ.</li>
+        <li>For each of five website–policy pairs, make one SO, PPM, ID, DLC, and GLC type decision.</li>
+        <li>Choose <strong>CREATED</strong> when you can create the violation. Choose <strong>CANNOT_CREATE</strong> only when no valid standalone violation can be made without inventing evidence.</li>
+        <li>A created candidate may contain multiple edit operations. Decision count and CSV row count may differ.</li>
         <li>Use screenshots as the ground truth for collected fields. DLC and GLC screenshot evidence is optional.</li>
-        <li>Download a JSON backup regularly. Working CSV includes every completed candidate so far; Final CSV unlocks at 25 of 25.</li>
+        <li>Download a JSON backup regularly. Working CSV includes every completed decision so far; Final CSV unlocks at 25 of 25.</li>
       </ol>
     </div>
     <details class="full-instructions">
