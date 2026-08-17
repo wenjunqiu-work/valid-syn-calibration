@@ -1,0 +1,2207 @@
+{
+  "schema_version": 1,
+  "bundle_id": "VALID-syn-calibration",
+  "bundle_version": "1.0.0",
+  "assignment_id": "VALID-CAL-001",
+  "batch_id": "VALID-BATCH-001",
+  "expected_pair_count": 5,
+  "expected_candidates_per_pair": 5,
+  "violation_types": [
+    "SO",
+    "PPM",
+    "ID",
+    "DLC",
+    "GLC"
+  ],
+  "pairs": [
+    {
+      "policy_id": "VALID-RAW-043",
+      "website": "stjude.org",
+      "analyzer_site_key": "stjude_org",
+      "primary_category": "Health",
+      "categories": "Health",
+      "document_heading": "Washington Health Privacy Notice",
+      "policy_url": "https://www.stjude.org/legal/u-s-privacy-policy-statement/washington-health-privacy-notice.html",
+      "collection_timestamp": "2026-04-05T08:25:56.887903+00:00",
+      "homepage_url": "https://www.stjude.org/",
+      "policy": {
+        "path": "data/policies/VALID-RAW-043.md",
+        "source_filename": "policy.md",
+        "sha256": "2ee39a661db7a1c363ba7ea70b4629f1349871438f43dead0c8d2e4bac4ac528",
+        "bytes": 10619,
+        "word_count": 992,
+        "length_bin": "short"
+      },
+      "source_results": {
+        "filename": "stjude_org.json",
+        "sha256": "e02eaf46701b7445ba74b3a0a21c90c4e1663d3acf822a15e44bf1dd5ecdbe72",
+        "bytes": 17365
+      },
+      "selection": {
+        "tier": "CORE",
+        "reason": "strict core; category=Health; length=short; complexity=complex",
+        "confidence": 96,
+        "candidate_count": 9,
+        "form_count": 1,
+        "step_count": 1,
+        "form_complexity": "complex",
+        "screenshot_count": 11
+      },
+      "forms": [
+        {
+          "form_index": 1,
+          "form_type": "registration",
+          "num_steps": 0,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "fields": [
+            {
+              "field_id": "llm-field-0",
+              "type": "text",
+              "name": "firstName",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "First name",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-1",
+              "type": "text",
+              "name": "lastName",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Last name",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-2",
+              "type": "tel",
+              "name": "phoneNumber",
+              "placeholder": "999-999-9999",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Phone",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-3",
+              "type": "email",
+              "name": "emailAddress",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-4",
+              "type": "checkbox",
+              "name": "optIn-ec",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "I would like to receive emails from St. Jude.",
+              "tag": "input",
+              "required": false,
+              "options": [
+                {
+                  "value": "true",
+                  "text": "I would like to receive emails from St. Jude."
+                },
+                {
+                  "value": "true",
+                  "text": "true"
+                }
+              ]
+            },
+            {
+              "field_id": "llm-field-5",
+              "type": "text",
+              "name": "firstName",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "First name",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-6",
+              "type": "text",
+              "name": "lastName",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Last name",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-7",
+              "type": "email",
+              "name": "emailAddress",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-8",
+              "type": "checkbox",
+              "name": "optIn-ec",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "I would like to receive emails from St. Jude.",
+              "tag": "input",
+              "required": false,
+              "options": [
+                {
+                  "value": "true",
+                  "text": "I would like to receive emails from St. Jude."
+                },
+                {
+                  "value": "true",
+                  "text": "true"
+                }
+              ]
+            }
+          ],
+          "screenshot_ids": [
+            "VALID-RAW-043-F1-S0-FULL",
+            "VALID-RAW-043-F1-S0-CROP0",
+            "VALID-RAW-043-F1-S0-CROP1",
+            "VALID-RAW-043-F1-S0-CROP2",
+            "VALID-RAW-043-F1-S0-CROP3",
+            "VALID-RAW-043-F1-S0-CROP4",
+            "VALID-RAW-043-F1-S0-CROP5",
+            "VALID-RAW-043-F1-S0-CROP6",
+            "VALID-RAW-043-F1-S0-CROP7",
+            "VALID-RAW-043-F1-S0-CROP8"
+          ]
+        }
+      ],
+      "screenshots": [
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-FULL",
+          "kind": "full_form",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": null,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1.png",
+          "sha256": "a6aed94ee0d96d3d4fef07f976eaff3b61ab463c6940f6cf547b4a063dfec05a",
+          "bytes": 483765
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP0",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 0,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop0.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop0.png",
+          "sha256": "4977a56f732e22023a851735d4250ce7b4343856e7f761d78689ffa3c356874c",
+          "bytes": 2627
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP1",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 1,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop1.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop1.png",
+          "sha256": "5f05781dd8101d5e193cab0d3f078a42b9f3f9832210b51caa4082aba6bef2e9",
+          "bytes": 201191
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP2",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 2,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop2.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop2.png",
+          "sha256": "18a7fc48c1c47599ec4f8474675af509c55cf3691f3c17879ddcef53d28c5be5",
+          "bytes": 45839
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP3",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 3,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop3.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop3.png",
+          "sha256": "0f724fb42e081bc16e5a7f1aa9155f71061c14145cdeaa6160bc8339e935fe98",
+          "bytes": 13480
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP4",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 4,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop4.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop4.png",
+          "sha256": "8a89ecec4a2d74c392e4c9b04072285eabff26d24c3382c54eae9139e15bfe99",
+          "bytes": 146754
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP5",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 5,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop5.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop5.png",
+          "sha256": "60be8b85c2038a62fea37f9f09d4a11ddfb38d4ca68f388d2d9da4f66c2f11a3",
+          "bytes": 145985
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP6",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 6,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop6.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop6.png",
+          "sha256": "15a07aeede98cdf23b7342168384903b4fb29c59a61309e97f9c2411c6679119",
+          "bytes": 18596
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP7",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 7,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop7.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop7.png",
+          "sha256": "c3e59928143b4cc661b0a5011df21000c2c1e96d619f039648478de912a7f891",
+          "bytes": 18368
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-F1-S0-CROP8",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 8,
+          "page_url": "https://www.stjude.org/get-involved/other-ways/stay-connected.html",
+          "source_filename": "stjude_org_registration_1_crop8.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_registration_1_crop8.png",
+          "sha256": "1c01c9b442190bb0a312b9bec0ed9ca976df9925610f96866f2fd2336a7f3ff9",
+          "bytes": 11704
+        },
+        {
+          "screenshot_id": "VALID-RAW-043-HOME",
+          "kind": "homepage",
+          "form_type": null,
+          "form_index": null,
+          "step": null,
+          "crop_index": null,
+          "page_url": "https://www.stjude.org/",
+          "source_filename": "stjude_org_homepage.png",
+          "path": "assets/screenshots/VALID-RAW-043/stjude_org_homepage.png",
+          "sha256": "e2b8407d7ccebeec52a1883441a39a0e18fb9b8c7f48fd773b0aaf4255551de2",
+          "bytes": 1600958
+        }
+      ]
+    },
+    {
+      "policy_id": "VALID-RAW-048",
+      "website": "fut.gg",
+      "analyzer_site_key": "fut_gg",
+      "primary_category": "Information Security",
+      "categories": "Information Security",
+      "document_heading": "Privacy Policy",
+      "policy_url": "https://www.fut.gg/privacy",
+      "collection_timestamp": "2026-04-03T02:01:08.912586+00:00",
+      "homepage_url": "https://www.fut.gg/",
+      "policy": {
+        "path": "data/policies/VALID-RAW-048.md",
+        "source_filename": "policy.md",
+        "sha256": "01f16952893dfe0061dfdab37d7da8cd6da8e6faca275f19030fa51b8a90bf33",
+        "bytes": 21559,
+        "word_count": 3091,
+        "length_bin": "medium"
+      },
+      "source_results": {
+        "filename": "fut_gg.json",
+        "sha256": "a20a183be657b0e51f4cf78b56b824f88973e077c79f611a172716b5012b223d",
+        "bytes": 24076
+      },
+      "selection": {
+        "tier": "CORE",
+        "reason": "strict core; category=Information Security; length=medium; complexity=simple",
+        "confidence": 99,
+        "candidate_count": 2,
+        "form_count": 1,
+        "step_count": 1,
+        "form_complexity": "simple",
+        "screenshot_count": 4
+      },
+      "forms": [
+        {
+          "form_index": 1,
+          "form_type": "registration",
+          "num_steps": 1,
+          "page_url": "https://www.fut.gg/",
+          "fields": [
+            {
+              "field_id": "llm-field-2",
+              "type": "input",
+              "name": "",
+              "placeholder": "Choose a username",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Username",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-3",
+              "type": "email",
+              "name": "",
+              "placeholder": "Enter your email address",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email address",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-4",
+              "type": "password",
+              "name": "",
+              "placeholder": "Create a password",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Password",
+              "tag": "input",
+              "required": true,
+              "options": null
+            }
+          ],
+          "screenshot_ids": [
+            "VALID-RAW-048-F1-S0-FULL",
+            "VALID-RAW-048-F1-S0-CROP0",
+            "VALID-RAW-048-F1-S0-CROP1"
+          ]
+        }
+      ],
+      "screenshots": [
+        {
+          "screenshot_id": "VALID-RAW-048-F1-S0-FULL",
+          "kind": "full_form",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": null,
+          "page_url": "https://www.fut.gg/",
+          "source_filename": "fut_gg_registration_1.png",
+          "path": "assets/screenshots/VALID-RAW-048/fut_gg_registration_1.png",
+          "sha256": "5d7c2d8abdee6ec1bb6b359143efa01f7a182bb55d8d03556fc6ffc6ce28a6b9",
+          "bytes": 1415282
+        },
+        {
+          "screenshot_id": "VALID-RAW-048-F1-S0-CROP0",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 0,
+          "page_url": "https://www.fut.gg/",
+          "source_filename": "fut_gg_registration_1_crop0.png",
+          "path": "assets/screenshots/VALID-RAW-048/fut_gg_registration_1_crop0.png",
+          "sha256": "dfdd34875a8da00ee0bbc0b69ac6b792bd913f6fa7e8a64c8df88be96ce24be5",
+          "bytes": 34076
+        },
+        {
+          "screenshot_id": "VALID-RAW-048-F1-S0-CROP1",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 1,
+          "page_url": "https://www.fut.gg/",
+          "source_filename": "fut_gg_registration_1_crop1.png",
+          "path": "assets/screenshots/VALID-RAW-048/fut_gg_registration_1_crop1.png",
+          "sha256": "7ec94d27724652eb0770075a40533efe90755b80b527758dd3dd4d27806d8264",
+          "bytes": 10656
+        },
+        {
+          "screenshot_id": "VALID-RAW-048-HOME",
+          "kind": "homepage",
+          "form_type": null,
+          "form_index": null,
+          "step": null,
+          "crop_index": null,
+          "page_url": "https://www.fut.gg/",
+          "source_filename": "fut_gg_homepage.png",
+          "path": "assets/screenshots/VALID-RAW-048/fut_gg_homepage.png",
+          "sha256": "23d03c35ee3b8ae6b345d36e59d4b65a093240f04c7216a2d0db6a87ef62fa2c",
+          "bytes": 1689303
+        }
+      ]
+    },
+    {
+      "policy_id": "VALID-RAW-003",
+      "website": "smartyads.com",
+      "analyzer_site_key": "smartyads_com",
+      "primary_category": "Advertising & Tracking",
+      "categories": "Advertising & Tracking",
+      "document_heading": "Privacy Policy",
+      "policy_url": "https://smartyads.com/privacy-policy",
+      "collection_timestamp": "2026-04-04T09:11:49.062916+00:00",
+      "homepage_url": "https://smartyads.com/",
+      "policy": {
+        "path": "data/policies/VALID-RAW-003.md",
+        "source_filename": "policy.md",
+        "sha256": "83ed095cd3d85bc3196ccd675abd1c91d943e54df48729b57fe040a1340a1a4f",
+        "bytes": 44721,
+        "word_count": 6339,
+        "length_bin": "medium"
+      },
+      "source_results": {
+        "filename": "smartyads_com.json",
+        "sha256": "0c154e2b96c327642c4527a35f0c48c13b7f2bfcbe65de27cb4776b57bf6b981",
+        "bytes": 26470
+      },
+      "selection": {
+        "tier": "CORE",
+        "reason": "strict core; category=Advertising & Tracking; length=medium; complexity=medium",
+        "confidence": 95,
+        "candidate_count": 5,
+        "form_count": 1,
+        "step_count": 1,
+        "form_complexity": "medium",
+        "screenshot_count": 5
+      },
+      "forms": [
+        {
+          "form_index": 1,
+          "form_type": "registration",
+          "num_steps": 1,
+          "page_url": "https://smartyads.com/",
+          "fields": [
+            {
+              "field_id": "llm-field-2",
+              "type": "email",
+              "name": "email",
+              "placeholder": "Enter Your Email",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-3",
+              "type": "select",
+              "name": "state",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "",
+              "tag": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "",
+                  "text": "Select State of Residence"
+                },
+                {
+                  "value": "California",
+                  "text": "California"
+                },
+                {
+                  "value": "Colorado",
+                  "text": "Colorado"
+                },
+                {
+                  "value": "Connecticut",
+                  "text": "Connecticut"
+                },
+                {
+                  "value": "Delaware",
+                  "text": "Delaware"
+                },
+                {
+                  "value": "Iowa",
+                  "text": "Iowa"
+                },
+                {
+                  "value": "Indiana",
+                  "text": "Indiana"
+                },
+                {
+                  "value": "Montana",
+                  "text": "Montana"
+                },
+                {
+                  "value": "Maryland",
+                  "text": "Maryland"
+                },
+                {
+                  "value": "Nebraska",
+                  "text": "Nebraska"
+                },
+                {
+                  "value": "Kentucky",
+                  "text": "Kentucky"
+                },
+                {
+                  "value": "Rhode Island",
+                  "text": "Rhode Island"
+                },
+                {
+                  "value": "Nevada",
+                  "text": "Nevada"
+                },
+                {
+                  "value": "New Hampshire",
+                  "text": "New Hampshire"
+                },
+                {
+                  "value": "New Jersey",
+                  "text": "New Jersey"
+                },
+                {
+                  "value": "Oregon",
+                  "text": "Oregon"
+                },
+                {
+                  "value": "Texas",
+                  "text": "Texas"
+                },
+                {
+                  "value": "Utah",
+                  "text": "Utah"
+                },
+                {
+                  "value": "Virginia",
+                  "text": "Virginia"
+                },
+                {
+                  "value": "Minnesota",
+                  "text": "Minnesota"
+                },
+                {
+                  "value": "Tennessee",
+                  "text": "Tennessee"
+                }
+              ]
+            }
+          ],
+          "screenshot_ids": [
+            "VALID-RAW-003-F1-S0-FULL",
+            "VALID-RAW-003-F1-S0-CROP0",
+            "VALID-RAW-003-F1-S0-CROP1",
+            "VALID-RAW-003-F1-S0-CROP2"
+          ]
+        }
+      ],
+      "screenshots": [
+        {
+          "screenshot_id": "VALID-RAW-003-F1-S0-FULL",
+          "kind": "full_form",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": null,
+          "page_url": "https://smartyads.com/",
+          "source_filename": "smartyads_com_registration_1.png",
+          "path": "assets/screenshots/VALID-RAW-003/smartyads_com_registration_1.png",
+          "sha256": "fb014dc01c4110da28d0f39436bef0fc0315903154d136bcb09cb734f6f9c053",
+          "bytes": 556248
+        },
+        {
+          "screenshot_id": "VALID-RAW-003-F1-S0-CROP0",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 0,
+          "page_url": "https://smartyads.com/",
+          "source_filename": "smartyads_com_registration_1_crop0.png",
+          "path": "assets/screenshots/VALID-RAW-003/smartyads_com_registration_1_crop0.png",
+          "sha256": "45e3ee851662cd23b93f61c90cc26eaffe4f16eb21cef01f6dbbd23aa39dffa8",
+          "bytes": 207016
+        },
+        {
+          "screenshot_id": "VALID-RAW-003-F1-S0-CROP1",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 1,
+          "page_url": "https://smartyads.com/",
+          "source_filename": "smartyads_com_registration_1_crop1.png",
+          "path": "assets/screenshots/VALID-RAW-003/smartyads_com_registration_1_crop1.png",
+          "sha256": "6a946749a29426f400dd3dab27cee9db5e83bb2e2e71064b9b764effed76ae6e",
+          "bytes": 145986
+        },
+        {
+          "screenshot_id": "VALID-RAW-003-F1-S0-CROP2",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 2,
+          "page_url": "https://smartyads.com/",
+          "source_filename": "smartyads_com_registration_1_crop2.png",
+          "path": "assets/screenshots/VALID-RAW-003/smartyads_com_registration_1_crop2.png",
+          "sha256": "8b29321aaf6dfdeff94a6a0210d43cc2b11e2b9872c8ab6573160ca6ca5901c8",
+          "bytes": 3147
+        },
+        {
+          "screenshot_id": "VALID-RAW-003-HOME",
+          "kind": "homepage",
+          "form_type": null,
+          "form_index": null,
+          "step": null,
+          "crop_index": null,
+          "page_url": "https://smartyads.com/",
+          "source_filename": "smartyads_com_homepage.png",
+          "path": "assets/screenshots/VALID-RAW-003/smartyads_com_homepage.png",
+          "sha256": "5b3a8329763a129df99701bef106e09111ab1be2aa38cdecfaea5bf0164027be",
+          "bytes": 571775
+        }
+      ]
+    },
+    {
+      "policy_id": "VALID-RAW-099",
+      "website": "eater.com",
+      "analyzer_site_key": "eater_com",
+      "primary_category": "Videos",
+      "categories": "Videos",
+      "document_heading": "Vox Media main menu",
+      "policy_url": "https://www.eater.com/legal/privacy-notice",
+      "collection_timestamp": "2026-03-29T09:58:52.489939+00:00",
+      "homepage_url": "https://www.eater.com/",
+      "policy": {
+        "path": "data/policies/VALID-RAW-099.md",
+        "source_filename": "policy.md",
+        "sha256": "9215ff84bda2a37ee45ba5053b582efbb075018126fd18f07ec74a9732a44e7a",
+        "bytes": 85924,
+        "word_count": 13120,
+        "length_bin": "long"
+      },
+      "source_results": {
+        "filename": "eater_com.json",
+        "sha256": "667057ec192e2c360157f18e50b70a794bd3ec62dbbc8a3ab2b92f69ee34a20a",
+        "bytes": 51057
+      },
+      "selection": {
+        "tier": "CORE",
+        "reason": "strict core; category=Videos; length=long; complexity=medium",
+        "confidence": 95,
+        "candidate_count": 1,
+        "form_count": 1,
+        "step_count": 2,
+        "form_complexity": "medium",
+        "screenshot_count": 7
+      },
+      "forms": [
+        {
+          "form_index": 1,
+          "form_type": "registration",
+          "num_steps": 2,
+          "page_url": "https://www.eater.com/",
+          "fields": [
+            {
+              "field_id": "llm-field-0",
+              "type": "email",
+              "name": "email",
+              "placeholder": "Enter your email",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email (required)",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-0",
+              "type": "email",
+              "name": "email",
+              "placeholder": "Enter your email",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email (required)",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-1",
+              "type": "email",
+              "name": "email",
+              "placeholder": "Email Address",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "",
+              "tag": "input",
+              "required": true,
+              "options": null
+            }
+          ],
+          "screenshot_ids": [
+            "VALID-RAW-099-F1-S0-FULL",
+            "VALID-RAW-099-F1-S0-CROP0",
+            "VALID-RAW-099-F1-S0-CROP1",
+            "VALID-RAW-099-F1-S2-FULL",
+            "VALID-RAW-099-F1-S2-CROP0",
+            "VALID-RAW-099-F1-S2-CROP1"
+          ]
+        }
+      ],
+      "screenshots": [
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S0-FULL",
+          "kind": "full_form",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": null,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1.png",
+          "sha256": "0caad4370f7eb04d4d1d9ff06fb27cc7036bd1145707da75a3a2846200ce6cbb",
+          "bytes": 2917327
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S0-CROP0",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 0,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1_crop0.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1_crop0.png",
+          "sha256": "eafff9e879558e223c36ee989886726bf894245509d9d6b67defa67f2ca26499",
+          "bytes": 12886
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S0-CROP1",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 0,
+          "crop_index": 1,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1_crop1.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1_crop1.png",
+          "sha256": "f2e27d809a293e29544604366f9ee3cef4369f636fd68124b96c5ab1ab5534bd",
+          "bytes": 2881
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S2-FULL",
+          "kind": "step",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 2,
+          "crop_index": null,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1_step2.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1_step2.png",
+          "sha256": "b022a6659dc3419448778127976f28bf62332f1f56ff186c4351d3aa78ea73f3",
+          "bytes": 2934054
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S2-CROP0",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 2,
+          "crop_index": 0,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1_step2_crop0.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1_step2_crop0.png",
+          "sha256": "b86d40e186467b4a41439e0c83acfc7ba36a2a1d380f715545dfdc0a39833b98",
+          "bytes": 15743
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-F1-S2-CROP1",
+          "kind": "cropped_field",
+          "form_type": "registration",
+          "form_index": 1,
+          "step": 2,
+          "crop_index": 1,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_registration_1_step2_crop1.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_registration_1_step2_crop1.png",
+          "sha256": "8228ce2f95e7de9a56722f246ca6fc2f9b8035aade8288663d31ab7aa4681a86",
+          "bytes": 5708
+        },
+        {
+          "screenshot_id": "VALID-RAW-099-HOME",
+          "kind": "homepage",
+          "form_type": null,
+          "form_index": null,
+          "step": null,
+          "crop_index": null,
+          "page_url": "https://www.eater.com/",
+          "source_filename": "eater_com_homepage.png",
+          "path": "assets/screenshots/VALID-RAW-099/eater_com_homepage.png",
+          "sha256": "d4e3924ef90870a9c389611b1cb7e780754f4faeaed348681fd412f27a437945",
+          "bytes": 914382
+        }
+      ]
+    },
+    {
+      "policy_id": "VALID-RAW-005",
+      "website": "exoclick.com",
+      "analyzer_site_key": "exoclick_com",
+      "primary_category": "Advertising & Tracking",
+      "categories": "Advertising & Tracking",
+      "document_heading": "[](https://www.exoclick.com/)",
+      "policy_url": "https://www.exoclick.com/privacy-policy",
+      "collection_timestamp": "2026-03-30T01:47:53.126693+00:00",
+      "homepage_url": "https://www.exoclick.com/",
+      "policy": {
+        "path": "data/policies/VALID-RAW-005.md",
+        "source_filename": "policy.md",
+        "sha256": "d8af6333726322dab4027b7691f42caca080c8a75be5c6d2368e23f680eedc81",
+        "bytes": 36782,
+        "word_count": 3469,
+        "length_bin": "medium"
+      },
+      "source_results": {
+        "filename": "exoclick_com.json",
+        "sha256": "82ced7ef46879f0ade92022fe7a011451162cf0092cc552ea530adb9b02ea4ca",
+        "bytes": 49071
+      },
+      "selection": {
+        "tier": "CORE",
+        "reason": "strict core; category=Advertising & Tracking; length=medium; complexity=simple",
+        "confidence": 95,
+        "candidate_count": 2,
+        "form_count": 1,
+        "step_count": 1,
+        "form_complexity": "simple",
+        "screenshot_count": 2
+      },
+      "forms": [
+        {
+          "form_index": 1,
+          "form_type": "registration",
+          "num_steps": 1,
+          "page_url": "https://admin.exoclick.com/login",
+          "fields": [
+            {
+              "field_id": "llm-field-0",
+              "type": "input",
+              "name": "username",
+              "placeholder": "Username",
+              "aria_label": "",
+              "autocomplete": "username",
+              "label": "Username",
+              "tag": "input",
+              "required": true,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-1",
+              "type": "password",
+              "name": "password",
+              "placeholder": "Password",
+              "aria_label": "",
+              "autocomplete": "password",
+              "label": "Password",
+              "tag": "input",
+              "required": true,
+              "options": null
+            }
+          ],
+          "screenshot_ids": []
+        },
+        {
+          "form_index": 2,
+          "form_type": "registration",
+          "num_steps": 1,
+          "page_url": "https://www.exoclick.com/signup/",
+          "fields": [
+            {
+              "field_id": "llm-field-0",
+              "type": "text",
+              "name": "username",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Username *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-1",
+              "type": "text",
+              "name": "company_name",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Company name *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-2",
+              "type": "password",
+              "name": "password",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Password *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-3",
+              "type": "password",
+              "name": "confirm_password",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Confirm password *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-4",
+              "type": "text",
+              "name": "firstname",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "First name *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-5",
+              "type": "text",
+              "name": "lastname",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Last name *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-6",
+              "type": "email",
+              "name": "email",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Email *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-7",
+              "type": "email",
+              "name": "confirm_email",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Confirm email *",
+              "tag": "input",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-8",
+              "type": "text",
+              "name": "country",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Country *",
+              "tag": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "",
+                  "text": "Please select a country"
+                },
+                {
+                  "value": "AFG",
+                  "text": "Afghanistan"
+                },
+                {
+                  "value": "ALA",
+                  "text": "Aland Islands"
+                },
+                {
+                  "value": "ALB",
+                  "text": "Albania"
+                },
+                {
+                  "value": "DZA",
+                  "text": "Algeria"
+                },
+                {
+                  "value": "ASM",
+                  "text": "American Samoa"
+                },
+                {
+                  "value": "AND",
+                  "text": "Andorra"
+                },
+                {
+                  "value": "AGO",
+                  "text": "Angola"
+                },
+                {
+                  "value": "AIA",
+                  "text": "Anguilla"
+                },
+                {
+                  "value": "ATA",
+                  "text": "Antarctica"
+                },
+                {
+                  "value": "ATG",
+                  "text": "Antigua and Barbuda"
+                },
+                {
+                  "value": "ARG",
+                  "text": "Argentina"
+                },
+                {
+                  "value": "ARM",
+                  "text": "Armenia"
+                },
+                {
+                  "value": "ABW",
+                  "text": "Aruba"
+                },
+                {
+                  "value": "AUS",
+                  "text": "Australia"
+                },
+                {
+                  "value": "AUT",
+                  "text": "Austria"
+                },
+                {
+                  "value": "AZE",
+                  "text": "Azerbaijan"
+                },
+                {
+                  "value": "BHS",
+                  "text": "Bahamas"
+                },
+                {
+                  "value": "BHR",
+                  "text": "Bahrain"
+                },
+                {
+                  "value": "BGD",
+                  "text": "Bangladesh"
+                },
+                {
+                  "value": "BRB",
+                  "text": "Barbados"
+                },
+                {
+                  "value": "BLR",
+                  "text": "Belarus"
+                },
+                {
+                  "value": "BEL",
+                  "text": "Belgium"
+                },
+                {
+                  "value": "BLZ",
+                  "text": "Belize"
+                },
+                {
+                  "value": "BEN",
+                  "text": "Benin"
+                },
+                {
+                  "value": "BMU",
+                  "text": "Bermuda"
+                },
+                {
+                  "value": "BTN",
+                  "text": "Bhutan"
+                },
+                {
+                  "value": "BOL",
+                  "text": "Bolivia"
+                },
+                {
+                  "value": "BES",
+                  "text": "Bonaire, Sint Eustatius and Saba"
+                },
+                {
+                  "value": "BIH",
+                  "text": "Bosnia and Herzegovina"
+                },
+                {
+                  "value": "BWA",
+                  "text": "Botswana"
+                },
+                {
+                  "value": "BVT",
+                  "text": "Bouvet Island"
+                },
+                {
+                  "value": "BRA",
+                  "text": "Brazil"
+                },
+                {
+                  "value": "IOT",
+                  "text": "British Indian Ocean Territory"
+                },
+                {
+                  "value": "BRN",
+                  "text": "Brunei"
+                },
+                {
+                  "value": "BGR",
+                  "text": "Bulgaria"
+                },
+                {
+                  "value": "BFA",
+                  "text": "Burkina Faso"
+                },
+                {
+                  "value": "BDI",
+                  "text": "Burundi"
+                },
+                {
+                  "value": "KHM",
+                  "text": "Cambodia"
+                },
+                {
+                  "value": "CMR",
+                  "text": "Cameroon"
+                },
+                {
+                  "value": "CAN",
+                  "text": "Canada"
+                },
+                {
+                  "value": "CPV",
+                  "text": "Cape Verde"
+                },
+                {
+                  "value": "CYM",
+                  "text": "Cayman Islands"
+                },
+                {
+                  "value": "CAF",
+                  "text": "Central African Republic"
+                },
+                {
+                  "value": "TCD",
+                  "text": "Chad"
+                },
+                {
+                  "value": "CHL",
+                  "text": "Chile"
+                },
+                {
+                  "value": "CHN",
+                  "text": "China"
+                },
+                {
+                  "value": "CXR",
+                  "text": "Christmas Island"
+                },
+                {
+                  "value": "CCK",
+                  "text": "Cocos (Keeling) Islands"
+                },
+                {
+                  "value": "COL",
+                  "text": "Colombia"
+                },
+                {
+                  "value": "COM",
+                  "text": "Comoros"
+                },
+                {
+                  "value": "COG",
+                  "text": "Congo"
+                },
+                {
+                  "value": "COK",
+                  "text": "Cook Islands"
+                },
+                {
+                  "value": "CRI",
+                  "text": "Costa Rica"
+                },
+                {
+                  "value": "CIV",
+                  "text": "Cote d'ivoire (Ivory Coast)"
+                },
+                {
+                  "value": "HRV",
+                  "text": "Croatia"
+                },
+                {
+                  "value": "CUB",
+                  "text": "Cuba"
+                },
+                {
+                  "value": "CUW",
+                  "text": "Curacao"
+                },
+                {
+                  "value": "CYP",
+                  "text": "Cyprus"
+                },
+                {
+                  "value": "CZE",
+                  "text": "Czech Republic"
+                },
+                {
+                  "value": "COD",
+                  "text": "Democratic Republic of the Congo"
+                },
+                {
+                  "value": "DNK",
+                  "text": "Denmark"
+                },
+                {
+                  "value": "DJI",
+                  "text": "Djibouti"
+                },
+                {
+                  "value": "DMA",
+                  "text": "Dominica"
+                },
+                {
+                  "value": "DOM",
+                  "text": "Dominican Republic"
+                },
+                {
+                  "value": "ECU",
+                  "text": "Ecuador"
+                },
+                {
+                  "value": "EGY",
+                  "text": "Egypt"
+                },
+                {
+                  "value": "SLV",
+                  "text": "El Salvador"
+                },
+                {
+                  "value": "GNQ",
+                  "text": "Equatorial Guinea"
+                },
+                {
+                  "value": "ERI",
+                  "text": "Eritrea"
+                },
+                {
+                  "value": "EST",
+                  "text": "Estonia"
+                },
+                {
+                  "value": "ETH",
+                  "text": "Ethiopia"
+                },
+                {
+                  "value": "FLK",
+                  "text": "Falkland Islands (Malvinas)"
+                },
+                {
+                  "value": "FRO",
+                  "text": "Faroe Islands"
+                },
+                {
+                  "value": "FJI",
+                  "text": "Fiji"
+                },
+                {
+                  "value": "FIN",
+                  "text": "Finland"
+                },
+                {
+                  "value": "FRA",
+                  "text": "France"
+                },
+                {
+                  "value": "GUF",
+                  "text": "French Guiana"
+                },
+                {
+                  "value": "PYF",
+                  "text": "French Polynesia"
+                },
+                {
+                  "value": "ATF",
+                  "text": "French Southern Territories"
+                },
+                {
+                  "value": "GAB",
+                  "text": "Gabon"
+                },
+                {
+                  "value": "GMB",
+                  "text": "Gambia"
+                },
+                {
+                  "value": "GEO",
+                  "text": "Georgia"
+                },
+                {
+                  "value": "DEU",
+                  "text": "Germany"
+                },
+                {
+                  "value": "GHA",
+                  "text": "Ghana"
+                },
+                {
+                  "value": "GIB",
+                  "text": "Gibraltar"
+                },
+                {
+                  "value": "GRC",
+                  "text": "Greece"
+                },
+                {
+                  "value": "GRL",
+                  "text": "Greenland"
+                },
+                {
+                  "value": "GRD",
+                  "text": "Grenada"
+                },
+                {
+                  "value": "GLP",
+                  "text": "Guadeloupe"
+                },
+                {
+                  "value": "GUM",
+                  "text": "Guam"
+                },
+                {
+                  "value": "GTM",
+                  "text": "Guatemala"
+                },
+                {
+                  "value": "GGY",
+                  "text": "Guernsey"
+                },
+                {
+                  "value": "GIN",
+                  "text": "Guinea"
+                },
+                {
+                  "value": "GNB",
+                  "text": "Guinea-Bissau"
+                },
+                {
+                  "value": "GUY",
+                  "text": "Guyana"
+                },
+                {
+                  "value": "HTI",
+                  "text": "Haiti"
+                },
+                {
+                  "value": "HMD",
+                  "text": "Heard Island and McDonald Islands"
+                },
+                {
+                  "value": "HND",
+                  "text": "Honduras"
+                },
+                {
+                  "value": "HKG",
+                  "text": "Hong Kong"
+                },
+                {
+                  "value": "HUN",
+                  "text": "Hungary"
+                },
+                {
+                  "value": "ISL",
+                  "text": "Iceland"
+                },
+                {
+                  "value": "IND",
+                  "text": "India"
+                },
+                {
+                  "value": "IDN",
+                  "text": "Indonesia"
+                },
+                {
+                  "value": "IRN",
+                  "text": "Iran"
+                },
+                {
+                  "value": "IRQ",
+                  "text": "Iraq"
+                },
+                {
+                  "value": "IRL",
+                  "text": "Ireland"
+                },
+                {
+                  "value": "IMN",
+                  "text": "Isle of Man"
+                },
+                {
+                  "value": "ISR",
+                  "text": "Israel"
+                },
+                {
+                  "value": "ITA",
+                  "text": "Italy"
+                },
+                {
+                  "value": "JAM",
+                  "text": "Jamaica"
+                },
+                {
+                  "value": "JPN",
+                  "text": "Japan"
+                },
+                {
+                  "value": "JEY",
+                  "text": "Jersey"
+                },
+                {
+                  "value": "JOR",
+                  "text": "Jordan"
+                },
+                {
+                  "value": "KAZ",
+                  "text": "Kazakhstan"
+                },
+                {
+                  "value": "KEN",
+                  "text": "Kenya"
+                },
+                {
+                  "value": "KIR",
+                  "text": "Kiribati"
+                },
+                {
+                  "value": "XKX",
+                  "text": "Kosovo"
+                },
+                {
+                  "value": "KWT",
+                  "text": "Kuwait"
+                },
+                {
+                  "value": "KGZ",
+                  "text": "Kyrgyzstan"
+                },
+                {
+                  "value": "LAO",
+                  "text": "Laos"
+                },
+                {
+                  "value": "LVA",
+                  "text": "Latvia"
+                },
+                {
+                  "value": "LBN",
+                  "text": "Lebanon"
+                },
+                {
+                  "value": "LSO",
+                  "text": "Lesotho"
+                },
+                {
+                  "value": "LBR",
+                  "text": "Liberia"
+                },
+                {
+                  "value": "LBY",
+                  "text": "Libya"
+                },
+                {
+                  "value": "LIE",
+                  "text": "Liechtenstein"
+                },
+                {
+                  "value": "LTU",
+                  "text": "Lithuania"
+                },
+                {
+                  "value": "LUX",
+                  "text": "Luxembourg"
+                },
+                {
+                  "value": "MAC",
+                  "text": "Macao"
+                },
+                {
+                  "value": "MKD",
+                  "text": "Macedonia"
+                },
+                {
+                  "value": "MDG",
+                  "text": "Madagascar"
+                },
+                {
+                  "value": "MWI",
+                  "text": "Malawi"
+                },
+                {
+                  "value": "MYS",
+                  "text": "Malaysia"
+                },
+                {
+                  "value": "MDV",
+                  "text": "Maldives"
+                },
+                {
+                  "value": "MLI",
+                  "text": "Mali"
+                },
+                {
+                  "value": "MLT",
+                  "text": "Malta"
+                },
+                {
+                  "value": "MHL",
+                  "text": "Marshall Islands"
+                },
+                {
+                  "value": "MTQ",
+                  "text": "Martinique"
+                },
+                {
+                  "value": "MRT",
+                  "text": "Mauritania"
+                },
+                {
+                  "value": "MUS",
+                  "text": "Mauritius"
+                },
+                {
+                  "value": "MYT",
+                  "text": "Mayotte"
+                },
+                {
+                  "value": "MEX",
+                  "text": "Mexico"
+                },
+                {
+                  "value": "FSM",
+                  "text": "Micronesia"
+                },
+                {
+                  "value": "MDA",
+                  "text": "Moldova"
+                },
+                {
+                  "value": "MCO",
+                  "text": "Monaco"
+                },
+                {
+                  "value": "MNG",
+                  "text": "Mongolia"
+                },
+                {
+                  "value": "MNE",
+                  "text": "Montenegro"
+                },
+                {
+                  "value": "MSR",
+                  "text": "Montserrat"
+                },
+                {
+                  "value": "MAR",
+                  "text": "Morocco"
+                },
+                {
+                  "value": "MOZ",
+                  "text": "Mozambique"
+                },
+                {
+                  "value": "MMR",
+                  "text": "Myanmar (Burma)"
+                },
+                {
+                  "value": "NAM",
+                  "text": "Namibia"
+                },
+                {
+                  "value": "NRU",
+                  "text": "Nauru"
+                },
+                {
+                  "value": "NPL",
+                  "text": "Nepal"
+                },
+                {
+                  "value": "NLD",
+                  "text": "Netherlands"
+                },
+                {
+                  "value": "NCL",
+                  "text": "New Caledonia"
+                },
+                {
+                  "value": "NZL",
+                  "text": "New Zealand"
+                },
+                {
+                  "value": "NIC",
+                  "text": "Nicaragua"
+                },
+                {
+                  "value": "NER",
+                  "text": "Niger"
+                },
+                {
+                  "value": "NGA",
+                  "text": "Nigeria"
+                },
+                {
+                  "value": "NIU",
+                  "text": "Niue"
+                },
+                {
+                  "value": "NFK",
+                  "text": "Norfolk Island"
+                },
+                {
+                  "value": "PRK",
+                  "text": "North Korea"
+                },
+                {
+                  "value": "MNP",
+                  "text": "Northern Mariana Islands"
+                },
+                {
+                  "value": "NOR",
+                  "text": "Norway"
+                },
+                {
+                  "value": "OMN",
+                  "text": "Oman"
+                },
+                {
+                  "value": "PAK",
+                  "text": "Pakistan"
+                },
+                {
+                  "value": "PLW",
+                  "text": "Palau"
+                },
+                {
+                  "value": "PSE",
+                  "text": "Palestine"
+                },
+                {
+                  "value": "PAN",
+                  "text": "Panama"
+                },
+                {
+                  "value": "PNG",
+                  "text": "Papua New Guinea"
+                },
+                {
+                  "value": "PRY",
+                  "text": "Paraguay"
+                },
+                {
+                  "value": "PER",
+                  "text": "Peru"
+                },
+                {
+                  "value": "PHL",
+                  "text": "Philippines"
+                },
+                {
+                  "value": "PCN",
+                  "text": "Pitcairn"
+                },
+                {
+                  "value": "POL",
+                  "text": "Poland"
+                },
+                {
+                  "value": "PRT",
+                  "text": "Portugal"
+                },
+                {
+                  "value": "PRI",
+                  "text": "Puerto Rico"
+                },
+                {
+                  "value": "QAT",
+                  "text": "Qatar"
+                },
+                {
+                  "value": "REU",
+                  "text": "Reunion"
+                },
+                {
+                  "value": "ROU",
+                  "text": "Romania"
+                },
+                {
+                  "value": "RUS",
+                  "text": "Russia"
+                },
+                {
+                  "value": "RWA",
+                  "text": "Rwanda"
+                },
+                {
+                  "value": "BLM",
+                  "text": "Saint Barthelemy"
+                },
+                {
+                  "value": "SHN",
+                  "text": "Saint Helena"
+                },
+                {
+                  "value": "KNA",
+                  "text": "Saint Kitts and Nevis"
+                },
+                {
+                  "value": "LCA",
+                  "text": "Saint Lucia"
+                },
+                {
+                  "value": "MAF",
+                  "text": "Saint Martin"
+                },
+                {
+                  "value": "SPM",
+                  "text": "Saint Pierre and Miquelon"
+                },
+                {
+                  "value": "VCT",
+                  "text": "Saint Vincent and the Grenadines"
+                },
+                {
+                  "value": "WSM",
+                  "text": "Samoa"
+                },
+                {
+                  "value": "SMR",
+                  "text": "San Marino"
+                },
+                {
+                  "value": "STP",
+                  "text": "Sao Tome and Principe"
+                },
+                {
+                  "value": "SAU",
+                  "text": "Saudi Arabia"
+                },
+                {
+                  "value": "SEN",
+                  "text": "Senegal"
+                },
+                {
+                  "value": "SRB",
+                  "text": "Serbia"
+                },
+                {
+                  "value": "SYC",
+                  "text": "Seychelles"
+                },
+                {
+                  "value": "SLE",
+                  "text": "Sierra Leone"
+                },
+                {
+                  "value": "SGP",
+                  "text": "Singapore"
+                },
+                {
+                  "value": "SXM",
+                  "text": "Sint Maarten"
+                },
+                {
+                  "value": "SVK",
+                  "text": "Slovakia"
+                },
+                {
+                  "value": "SVN",
+                  "text": "Slovenia"
+                },
+                {
+                  "value": "SLB",
+                  "text": "Solomon Islands"
+                },
+                {
+                  "value": "SOM",
+                  "text": "Somalia"
+                },
+                {
+                  "value": "ZAF",
+                  "text": "South Africa"
+                },
+                {
+                  "value": "SGS",
+                  "text": "South Georgia and the South Sandwich Islands"
+                },
+                {
+                  "value": "KOR",
+                  "text": "South Korea"
+                },
+                {
+                  "value": "SSD",
+                  "text": "South Sudan"
+                },
+                {
+                  "value": "ESP",
+                  "text": "Spain"
+                },
+                {
+                  "value": "LKA",
+                  "text": "Sri Lanka"
+                },
+                {
+                  "value": "SDN",
+                  "text": "Sudan"
+                },
+                {
+                  "value": "SUR",
+                  "text": "Suriname"
+                },
+                {
+                  "value": "SJM",
+                  "text": "Svalbard and Jan Mayen"
+                },
+                {
+                  "value": "SWZ",
+                  "text": "Swaziland"
+                },
+                {
+                  "value": "SWE",
+                  "text": "Sweden"
+                },
+                {
+                  "value": "CHE",
+                  "text": "Switzerland"
+                },
+                {
+                  "value": "SYR",
+                  "text": "Syria"
+                },
+                {
+                  "value": "TWN",
+                  "text": "Taiwan"
+                },
+                {
+                  "value": "TJK",
+                  "text": "Tajikistan"
+                },
+                {
+                  "value": "TZA",
+                  "text": "Tanzania"
+                },
+                {
+                  "value": "THA",
+                  "text": "Thailand"
+                },
+                {
+                  "value": "TLS",
+                  "text": "Timor-Leste (East Timor)"
+                },
+                {
+                  "value": "TGO",
+                  "text": "Togo"
+                },
+                {
+                  "value": "TKL",
+                  "text": "Tokelau"
+                },
+                {
+                  "value": "TON",
+                  "text": "Tonga"
+                },
+                {
+                  "value": "TTO",
+                  "text": "Trinidad and Tobago"
+                },
+                {
+                  "value": "TUN",
+                  "text": "Tunisia"
+                },
+                {
+                  "value": "TUR",
+                  "text": "Turkey"
+                },
+                {
+                  "value": "TKM",
+                  "text": "Turkmenistan"
+                },
+                {
+                  "value": "TCA",
+                  "text": "Turks and Caicos Islands"
+                },
+                {
+                  "value": "TUV",
+                  "text": "Tuvalu"
+                },
+                {
+                  "value": "UGA",
+                  "text": "Uganda"
+                },
+                {
+                  "value": "UKR",
+                  "text": "Ukraine"
+                },
+                {
+                  "value": "ARE",
+                  "text": "United Arab Emirates"
+                },
+                {
+                  "value": "GBR",
+                  "text": "United Kingdom"
+                },
+                {
+                  "value": "USA",
+                  "text": "United States"
+                },
+                {
+                  "value": "UMI",
+                  "text": "United States Minor Outlying Islands"
+                },
+                {
+                  "value": "XXX",
+                  "text": "Unknown"
+                },
+                {
+                  "value": "URY",
+                  "text": "Uruguay"
+                },
+                {
+                  "value": "UZB",
+                  "text": "Uzbekistan"
+                },
+                {
+                  "value": "VUT",
+                  "text": "Vanuatu"
+                },
+                {
+                  "value": "VAT",
+                  "text": "Vatican City"
+                },
+                {
+                  "value": "VEN",
+                  "text": "Venezuela"
+                },
+                {
+                  "value": "VNM",
+                  "text": "Vietnam"
+                },
+                {
+                  "value": "VGB",
+                  "text": "Virgin Islands, British"
+                },
+                {
+                  "value": "VIR",
+                  "text": "Virgin Islands, US"
+                },
+                {
+                  "value": "WLF",
+                  "text": "Wallis and Futuna"
+                },
+                {
+                  "value": "ESH",
+                  "text": "Western Sahara"
+                },
+                {
+                  "value": "YEM",
+                  "text": "Yemen"
+                },
+                {
+                  "value": "ZMB",
+                  "text": "Zambia"
+                },
+                {
+                  "value": "ZWE",
+                  "text": "Zimbabwe"
+                }
+              ]
+            },
+            {
+              "field_id": "llm-field-9",
+              "type": "text",
+              "name": "currency",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Currency *",
+              "tag": "select",
+              "required": false,
+              "options": [
+                {
+                  "value": "",
+                  "text": "Please select a currency"
+                },
+                {
+                  "value": "EUR",
+                  "text": "EUR"
+                },
+                {
+                  "value": "USD",
+                  "text": "USD"
+                }
+              ]
+            },
+            {
+              "field_id": "llm-field-10",
+              "type": "radio",
+              "name": "service",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Publisher\nI want to sell traffic",
+              "tag": "input",
+              "required": false,
+              "options": [
+                {
+                  "value": "2",
+                  "text": "Publisher\n                                                      I want to sell traffic"
+                },
+                {
+                  "value": "1",
+                  "text": "Advertiser\n                                                      I want to buy traffic"
+                }
+              ]
+            },
+            {
+              "field_id": "llm-field-11",
+              "type": "radio",
+              "name": "service",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Advertiser\nI want to buy traffic",
+              "tag": "input",
+              "required": false,
+              "options": [
+                {
+                  "value": "2",
+                  "text": "Publisher\n                                                      I want to sell traffic"
+                },
+                {
+                  "value": "1",
+                  "text": "Advertiser\n                                                      I want to buy traffic"
+                }
+              ]
+            },
+            {
+              "field_id": "llm-field-12",
+              "type": "textarea",
+              "name": "comments",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "Comments and additional information",
+              "tag": "textarea",
+              "required": false,
+              "options": null
+            },
+            {
+              "field_id": "llm-field-13",
+              "type": "checkbox",
+              "name": "terms",
+              "placeholder": "",
+              "aria_label": "",
+              "autocomplete": "",
+              "label": "I read, understand and accept the Terms & Conditions and Privacy Policy.",
+              "tag": "input",
+              "required": false,
+              "options": null
+            }
+          ],
+          "screenshot_ids": [
+            "VALID-RAW-005-F2-S0-FULL"
+          ]
+        }
+      ],
+      "screenshots": [
+        {
+          "screenshot_id": "VALID-RAW-005-F2-S0-FULL",
+          "kind": "full_form",
+          "form_type": "registration",
+          "form_index": 2,
+          "step": 0,
+          "crop_index": null,
+          "page_url": "https://www.exoclick.com/signup/",
+          "source_filename": "exoclick_com_registration_2.png",
+          "path": "assets/screenshots/VALID-RAW-005/exoclick_com_registration_2.png",
+          "sha256": "1e753420ace8b908792aeb8ca2a2eea6dfc825b7b5b26a6cc0b81b7602fb777a",
+          "bytes": 126426
+        },
+        {
+          "screenshot_id": "VALID-RAW-005-HOME",
+          "kind": "homepage",
+          "form_type": null,
+          "form_index": null,
+          "step": null,
+          "crop_index": null,
+          "page_url": "https://www.exoclick.com/",
+          "source_filename": "exoclick_com_homepage.png",
+          "path": "assets/screenshots/VALID-RAW-005/exoclick_com_homepage.png",
+          "sha256": "9e372edf41f59fbe3558be54767b9dedf785c091d281e5cd3e5fb63cb99dea05",
+          "bytes": 400708
+        }
+      ]
+    }
+  ]
+}

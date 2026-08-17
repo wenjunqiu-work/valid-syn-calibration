@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+*.pyc
+submissions/
+VALID-syn_*_author-*.csv
+VALID-syn_*_author-*.json

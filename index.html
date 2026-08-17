@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>VALID-syn Calibration Annotator</title>
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">V</span>
+      <div>
+        <h1>VALID-syn calibration</h1>
+        <p id="bundleLabel">Loading frozen bundle…</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="button ghost" id="instructionsButton" type="button">Instructions</button>
+      <div class="annotator-field">
+        <label for="annotatorId">Assigned annotator code</label>
+        <div class="annotator-code-row">
+          <input id="annotatorId" maxlength="32" autocomplete="off" placeholder="For testing: TEST01" aria-describedby="annotatorHelp">
+          <button class="button primary" id="activateAnnotatorButton" type="button">Start annotation</button>
+        </div>
+        <span id="annotatorHelp">For local testing, type TEST01. Study annotators should use only their assigned pseudonymous code.</span>
+      </div>
+      <button class="button ghost" id="backupButton" type="button">Backup draft</button>
+      <button class="button ghost" id="restoreButton" type="button">Restore draft</button>
+      <input id="restoreInput" type="file" accept="application/json,.json" hidden>
+      <button class="button secondary" id="workingExportButton" type="button">Working CSV</button>
+      <button class="button primary" id="finalExportButton" type="button" disabled>Final CSV</button>
+    </div>
+  </header>
+
+  <section class="progress-strip" aria-label="Assignment progress">
+    <div class="progress-copy">
+      <strong id="progressText">0 of 25 candidates complete</strong>
+      <span id="pairProgressText">Pair 1 of 5</span>
+    </div>
+    <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
+    <div class="status-line" id="globalStatus" role="status" aria-live="polite">Enter your assigned code to begin.</div>
+  </section>
+
+  <main class="workspace" id="workspace" hidden>
+    <section class="evidence-column" aria-label="Policy and webform evidence">
+      <article class="panel pair-panel">
+        <div class="pair-heading">
+          <div>
+            <span class="eyebrow" id="pairId">—</span>
+            <h2 id="pairWebsite">—</h2>
+            <p id="pairMeta">—</p>
+          </div>
+          <div class="pair-nav" aria-label="Policy navigation">
+            <button class="button icon" id="previousPair" type="button" aria-label="Previous pair">←</button>
+            <span id="pairCounter">1 / 5</span>
+            <button class="button icon" id="nextPair" type="button" aria-label="Next pair">→</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel policy-panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Canonical privacy policy</span>
+            <h3 id="policyHeading">—</h3>
+          </div>
+          <a id="policyUrl" class="source-link" href="#" target="_blank" rel="noreferrer">Source URL ↗</a>
+        </div>
+        <p class="helper">
+          Read the policy and find the disclosure statement(s) you need. You may use Ctrl+F (Windows/Linux) or Cmd+F (macOS). Then, highlight one snippet of policy text and click the matching <strong>Capture highlighted sentence(s) to remove, modify, or add</strong> button on the right to capture the highlighted policy text. <strong id="selectionStatus">No policy text selected.</strong>
+        </p>
+        <pre id="policyText" class="policy-text" tabindex="0" aria-label="Canonical privacy policy text"></pre>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Observed webforms</span>
+            <h3>Fields and screenshots</h3>
+          </div>
+          <span class="count-pill" id="evidenceCount">—</span>
+        </div>
+        <div id="formsList" class="forms-list"></div>
+        <details class="homepage-context" id="homepageContext">
+          <summary>Homepage context</summary>
+          <div id="homepageScreenshots" class="screenshot-grid"></div>
+        </details>
+      </article>
+    </section>
+
+    <section class="author-column" aria-label="Violation authoring">
+      <div class="candidate-tabs" id="candidateTabs" role="tablist" aria-label="Violation types"></div>
+
+      <article class="panel author-panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow" id="candidateLabel">Candidate</span>
+            <h3 id="candidateTitle">—</h3>
+          </div>
+          <span class="candidate-state" id="candidateState">Draft</span>
+        </div>
+        <p id="candidateHint" class="candidate-hint"></p>
+        <div id="candidateForm"></div>
+        <div id="candidateMessage" class="message" role="status" aria-live="polite"></div>
+        <div class="candidate-actions">
+          <button class="button primary" id="completeCandidate" type="button">Mark candidate complete</button>
+          <button class="button danger-ghost" id="clearCandidate" type="button">Clear candidate</button>
+        </div>
+      </article>
+
+      <article class="panel preview-panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Quality check</span>
+            <h3>Live operation preview</h3>
+          </div>
+        </div>
+        <div id="operationPreview" class="operation-preview"><span class="muted">Add an operation to preview it.</span></div>
+      </article>
+    </section>
+  </main>
+
+  <dialog id="instructionsDialog" class="modal instructions-modal">
+    <div class="modal-header">
+      <div><span class="eyebrow">VALID-syn</span><h2>Calibration instructions</h2></div>
+      <button class="button icon" id="closeInstructions" type="button" aria-label="Close instructions">×</button>
+    </div>
+    <div class="quick-start">
+      <h3>Five-pair quick start</h3>
+      <ol>
+        <li>Enter only your study-assigned annotator code.</li>
+        <li>For each of five website–policy pairs, complete one SO, PPM, ID, DLC, and GLC candidate.</li>
+        <li>Each candidate may contain multiple edit operations. Candidate count and CSV row count may differ.</li>
+        <li>Use screenshots as the ground truth for collected fields. DLC and GLC screenshot evidence is optional.</li>
+        <li>Download a JSON backup regularly. Working CSV includes every completed candidate so far; Final CSV unlocks at 25 of 25.</li>
+      </ol>
+    </div>
+    <details class="full-instructions">
+      <summary>Open the complete annotator instructions</summary>
+      <pre id="fullInstructions">Loading instructions…</pre>
+    </details>
+  </dialog>
+
+  <dialog id="imageDialog" class="modal image-modal">
+    <div class="modal-header">
+      <div><span class="eyebrow" id="imageDialogMeta">Evidence</span><h2 id="imageDialogTitle">Screenshot</h2></div>
+      <button class="button icon" id="closeImageDialog" type="button" aria-label="Close screenshot">×</button>
+    </div>
+    <img id="imageDialogImage" alt="Expanded webform evidence">
+  </dialog>
+
+  <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
