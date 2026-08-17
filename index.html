@@ -20,19 +20,26 @@
     </div>
 
     <div class="header-actions">
-      <button class="button ghost" id="instructionsButton" type="button">Instructions</button>
-      <div class="annotator-field">
-        <label for="annotatorId">Annotation name</label>
-        <div class="annotator-code-row">
-          <input id="annotatorId" maxlength="32" autocomplete="off" placeholder="Enter your annotation name">
-          <button class="button primary" id="activateAnnotatorButton" type="button">Start annotation</button>
+      <div class="annotation-start-group">
+        <div class="annotation-start-controls">
+          <button class="button ghost" id="instructionsButton" type="button">Instructions</button>
+          <div class="annotator-field">
+            <label for="annotatorId">Annotation name</label>
+            <div class="annotator-code-row">
+              <input id="annotatorId" maxlength="32" autocomplete="off" placeholder="Enter your annotation name" aria-describedby="annotationNameMessage" aria-invalid="false">
+              <button class="button primary" id="activateAnnotatorButton" type="button">Start annotation</button>
+            </div>
+          </div>
         </div>
+        <div class="annotation-name-message" id="annotationNameMessage" role="status" aria-live="polite" aria-atomic="true">Enter your annotation name above then click Start annotation.</div>
       </div>
-      <button class="button ghost" id="backupButton" type="button">Backup draft</button>
-      <button class="button ghost" id="restoreButton" type="button">Restore draft</button>
-      <input id="restoreInput" type="file" accept="application/json,.json" hidden>
-      <button class="button secondary" id="workingExportButton" type="button">Working CSV</button>
-      <button class="button primary" id="finalExportButton" type="button" disabled>Final CSV</button>
+      <div class="header-secondary-actions">
+        <button class="button ghost" id="backupButton" type="button">Backup draft</button>
+        <button class="button ghost" id="restoreButton" type="button">Restore draft</button>
+        <input id="restoreInput" type="file" accept="application/json,.json" hidden>
+        <button class="button secondary" id="workingExportButton" type="button">Working CSV</button>
+        <button class="button primary" id="finalExportButton" type="button" disabled>Final CSV</button>
+      </div>
     </div>
   </header>
 
@@ -42,7 +49,7 @@
       <span id="pairProgressText">Pair 1 of 5</span>
     </div>
     <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
-    <div class="status-line" id="globalStatus" role="status" aria-live="polite">Enter your annotation name to begin.</div>
+    <div class="status-line" id="globalStatus" role="status" aria-live="polite"></div>
   </section>
 
   <main class="workspace" id="workspace" hidden>

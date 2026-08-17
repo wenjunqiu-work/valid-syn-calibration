@@ -89,6 +89,16 @@ function setGlobalStatus(message) {
   $("#globalStatus").textContent = message;
 }
 
+const ANNOTATION_NAME_PROMPT = "Enter your annotation name above then click Start annotation.";
+
+function setAnnotationNameStatus(message, invalid = false) {
+  const status = $("#annotationNameMessage");
+  const input = $("#annotatorId");
+  status.textContent = message;
+  status.classList.toggle("invalid", Boolean(message) && invalid);
+  input.setAttribute("aria-invalid", invalid ? "true" : "false");
+}
+
 function showCandidateMessage(message, kind = "") {
   const box = $("#candidateMessage");
   box.textContent = message;
@@ -798,10 +808,6 @@ function renderCandidateForm() {
   }
 
   const enabled = isValidAnnotatorId(annotatorId) && Boolean(currentPolicyText);
-  if (!enabled) form.prepend(make("div", {
-    class: "locked-notice",
-    text: "Annotation is locked. Enter your annotation name above then click Start annotation.",
-  }));
   form.querySelectorAll("input,select,textarea,button").forEach((control) => { control.disabled = !enabled; });
   $("#completeCandidate").disabled = !enabled;
   $("#clearCandidate").disabled = !enabled;
@@ -868,7 +874,7 @@ function validateCandidate(pair, type, candidate, policyText) {
 
 async function completeCurrentCandidate() {
   if (!isValidAnnotatorId(annotatorId)) {
-    showCandidateMessage("Enter a valid annotation name first.", "error");
+    setAnnotationNameStatus("Enter a valid annotation name first.", true);
     return;
   }
   const pair = currentPair();
@@ -893,7 +899,7 @@ function activateAnnotator(value) {
   if (!isValidAnnotatorId(next)) {
     annotatorId = "";
     state = freshState("");
-    setGlobalStatus("Annotation name must be 2–32 letters, numbers, underscores, or hyphens.");
+    setAnnotationNameStatus(next ? "Annotation name must be 2–32 letters, numbers, underscores, or hyphens." : ANNOTATION_NAME_PROMPT, true);
     renderCandidateTabs();
     renderCandidateForm();
     refreshProgress();
@@ -905,6 +911,7 @@ function activateAnnotator(value) {
   renderCandidateTabs();
   renderCandidateForm();
   refreshProgress();
+  setAnnotationNameStatus("");
   setGlobalStatus(`Local autosave active for annotation name ${annotatorId}.`);
 }
 
@@ -918,7 +925,7 @@ function downloadBlob(blob, filename) {
 
 function backupDraft() {
   if (!isValidAnnotatorId(annotatorId)) {
-    setGlobalStatus("Enter a valid annotation name before downloading a backup.");
+    setAnnotationNameStatus("Enter a valid annotation name before downloading a backup.", true);
     return;
   }
   const backup = {
@@ -1048,7 +1055,7 @@ async function buildCsv(status) {
 
 async function exportCsv(finalSubmission) {
   if (!isValidAnnotatorId(annotatorId)) {
-    setGlobalStatus("Enter a valid annotation name before exporting.");
+    setAnnotationNameStatus("Enter a valid annotation name before exporting.", true);
     return;
   }
   const completed = completedCount();
@@ -1094,7 +1101,7 @@ async function boot() {
     state = annotatorId ? loadState(annotatorId) : freshState("");
     $("#workspace").hidden = false;
     await renderPair();
-    if (!annotatorId) setGlobalStatus("Enter your annotation name above then click Start annotation.");
+    setAnnotationNameStatus(annotatorId ? "" : ANNOTATION_NAME_PROMPT);
 
   } catch (error) {
     setGlobalStatus(`Calibration failed to load: ${error.message}`);
@@ -1110,7 +1117,7 @@ $("#annotatorId").addEventListener("input", (event) => {
   renderCandidateTabs();
   renderCandidateForm();
   refreshProgress();
-  setGlobalStatus("Click Start annotation to activate this annotation name.");
+  setAnnotationNameStatus(event.target.value.trim() ? "Click Start annotation to activate this annotation name." : ANNOTATION_NAME_PROMPT);
 });
 $("#annotatorId").addEventListener("keydown", (event) => {
   if (event.key === "Enter") activateAnnotator(event.target.value);
@@ -1134,7 +1141,13 @@ $("#clearCandidate").addEventListener("click", () => {
   showCandidateMessage("Decision cleared.", "success");
 });
 $("#backupButton").addEventListener("click", backupDraft);
-$("#restoreButton").addEventListener("click", () => $("#restoreInput").click());
+$("#restoreButton").addEventListener("click", () => {
+  if (!isValidAnnotatorId(annotatorId)) {
+    setAnnotationNameStatus("Enter a valid annotation name before restoring a backup.", true);
+    return;
+  }
+  $("#restoreInput").click();
+});
 $("#restoreInput").addEventListener("change", async (event) => {
   const file = event.target.files?.[0];
   if (!file) return;

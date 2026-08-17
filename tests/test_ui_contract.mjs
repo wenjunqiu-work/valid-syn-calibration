@@ -10,12 +10,24 @@ const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
 assert.match(index, /id="activateAnnotatorButton"/);
 assert.match(index, /<label for="annotatorId">Annotation name<\/label>/);
 assert.match(index, /placeholder="Enter your annotation name"/);
-assert.doesNotMatch(index, /annotatorHelp|aria-describedby="annotatorHelp"/);
+assert.doesNotMatch(index, /annotatorHelp/);
+assert.match(index, /aria-describedby="annotationNameMessage" aria-invalid="false"/);
+assert.match(index, /id="annotationNameMessage" role="status" aria-live="polite" aria-atomic="true"/);
+assert.match(index, /id="globalStatus" role="status" aria-live="polite"><\/div>/);
+const startGroupStart = index.indexOf('class="annotation-start-group"');
+const startGroupEnd = index.indexOf('class="header-secondary-actions"');
+const startGroup = index.slice(startGroupStart, startGroupEnd);
+assert.ok(startGroupStart >= 0 && startGroupEnd > startGroupStart);
+assert.ok(startGroup.indexOf('id="instructionsButton"') < startGroup.indexOf('id="annotatorId"'));
+assert.ok(startGroup.indexOf('id="annotatorId"') < startGroup.indexOf('id="activateAnnotatorButton"'));
+assert.ok(startGroup.indexOf('id="activateAnnotatorButton"') < startGroup.indexOf('id="annotationNameMessage"'));
 assert.match(index, /id="selectionStatus"/);
 assert.match(index, /id="previewPanel"/);
 assert.match(index, /Mark decision complete/);
 assert.match(index, /type decisions complete/);
-assert.match(app, /class: "locked-notice"/);
+assert.match(app, /function setAnnotationNameStatus\(message, invalid = false\)/);
+assert.match(app, /setAnnotationNameStatus\(annotatorId \? "" : ANNOTATION_NAME_PROMPT\)/);
+assert.doesNotMatch(app, /class: "locked-notice"|Annotation is locked/);
 assert.match(app, /document\.addEventListener\("selectionchange", rememberPolicySelection\)/);
 assert.match(app, /return \{ \.\.\.lastPolicySelection \}/);
 assert.match(app, /operations: \[defaultOperation\(type\)\]/);
@@ -39,6 +51,10 @@ assert.match(app, /localStorage\.setItem\(key, JSON\.stringify\(migrated\)\)/);
 assert.doesNotMatch(app, /removeItem\(legacyKey\)/);
 assert.match(css, /@media \(max-width: 1040px\)/);
 assert.match(css, /@media \(max-width: 700px\)/);
+assert.match(css, /\.annotation-start-group/);
+assert.match(css, /\.annotation-name-message\.invalid/);
+assert.match(css, /\.header-secondary-actions/);
+assert.doesNotMatch(css, /\.locked-notice/);
 assert.match(css, /\.outcome-choices \{ grid-template-columns: 1fr; \}/);
 assert.doesNotMatch(index, /policySearch|searchButton|searchCount|searchResults|Find a phrase or data type/);
 assert.doesNotMatch(app, /runSearch|addOperationFromSearch|useSearchAsConflict|useSearchAsModification|policySearch|searchButton|searchCount|searchResults/);
@@ -74,7 +90,8 @@ console.log(JSON.stringify({
   autosave_isolation_preserved: true,
   backup_restore_preserved: true,
   csv_export_preserved: true,
-  locked_form_explanation: true,
+  annotation_name_message_in_header: true,
+  lower_locked_message_removed: true,
   retained_policy_selection: true,
   initial_operation_visible: true,
   custom_find_removed: true,
