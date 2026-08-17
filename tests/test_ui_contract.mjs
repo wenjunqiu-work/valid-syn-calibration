@@ -6,6 +6,14 @@ const app = await readFile(new URL("../assets/js/app.js", import.meta.url), "utf
 const css = await readFile(new URL("../assets/css/app.css", import.meta.url), "utf8");
 const quickStart = await readFile(new URL("../docs/QUICK_START.md", import.meta.url), "utf8");
 const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
+const assetRevision = "1.1.0-r2";
+
+assert.ok(index.includes(`href="assets/css/app.css?v=${assetRevision}"`));
+assert.ok(index.includes(`src="assets/js/app.js?v=${assetRevision}"`));
+assert.ok(app.includes(`from "./core.js?v=${assetRevision}"`));
+assert.ok(app.includes(`from "./model.js?v=${assetRevision}"`));
+assert.ok(app.includes(`const ASSET_REVISION = "${assetRevision}"`));
+assert.match(app, /url\.searchParams\.set\("v", ASSET_REVISION\)/);
 
 assert.match(index, /id="activateAnnotatorButton"/);
 assert.match(index, /<label for="annotatorId">Annotation name<\/label>/);
@@ -102,4 +110,5 @@ console.log(JSON.stringify({
   decision_progress_wording: true,
   annotation_name_activation_wording: true,
   desktop_and_narrow_layout_contracts: true,
+  release_asset_cache_busting: true,
 }, null, 2));

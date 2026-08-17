@@ -39,6 +39,10 @@ node tests/test_ui_contract.mjs
 
 The application uses only relative URLs, so it works both at a domain root and at a project URL such as `https://account.github.io/repository-name/`. Deployment is intentionally not automated by this package.
 
+### Cache-safe releases
+
+The HTML loads CSS, the main JavaScript module, its dependent modules, the manifest, instructions, policies, and screenshots with the shared asset revision `1.1.0-r2`. This prevents GitHub Pages or a browser from combining files from different deployments. Whenever hosted HTML, CSS, JavaScript, instructions, or bundled evidence changes, update the revision consistently in `index.html`, `assets/js/app.js`, `tests/test_ui_contract.mjs`, and `scripts/validate_bundle.py`; the tests fail when these references disagree.
+
 ## Annotation and downloads
 
 - Every input change is saved in browser storage under bundle version, assignment, and annotation name.

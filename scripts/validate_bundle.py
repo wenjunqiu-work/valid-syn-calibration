@@ -12,6 +12,7 @@ from pathlib import Path
 
 
 PAIR_IDS = ["VALID-RAW-043", "VALID-RAW-048", "VALID-RAW-003", "VALID-RAW-099", "VALID-RAW-005"]
+ASSET_REVISION = "1.1.0-r2"
 TEXT_SUFFIXES = {".html", ".css", ".js", ".json", ".md", ".txt", ".py", ".yml", ".yaml"}
 
 
@@ -113,10 +114,25 @@ def main() -> None:
 
     app_path = site_root / "assets" / "js" / "app.js"
     app_text = app_path.read_text(encoding="utf-8") if app_path.is_file() else ""
+    index_path = site_root / "index.html"
+    index_text = index_path.read_text(encoding="utf-8") if index_path.is_file() else ""
     if "op_type" not in app_text:
         errors.append("op_type is missing from app export code")
     if "placement_mode" in app_text:
         errors.append("placement_mode must not appear in app export code")
+    cache_markers = [
+        f'assets/css/app.css?v={ASSET_REVISION}',
+        f'assets/js/app.js?v={ASSET_REVISION}',
+    ]
+    if any(marker not in index_text for marker in cache_markers):
+        errors.append("Versioned CSS/JavaScript entry points are missing from index.html")
+    module_markers = [
+        f'./core.js?v={ASSET_REVISION}',
+        f'./model.js?v={ASSET_REVISION}',
+        f'const ASSET_REVISION = "{ASSET_REVISION}"',
+    ]
+    if any(marker not in app_text for marker in module_markers):
+        errors.append("JavaScript module cache revisions are missing or inconsistent")
 
     report = {
         "ok": not errors,

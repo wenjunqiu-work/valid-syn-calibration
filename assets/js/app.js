@@ -5,7 +5,7 @@ import {
   isValidAnnotatorId,
   storageKey,
   utcStamp,
-} from "./core.js";
+} from "./core.js?v=1.1.0-r2";
 import {
   BACKUP_SCHEMA_VERSION,
   CANNOT_CREATE,
@@ -20,7 +20,7 @@ import {
   upgradeBackup,
   upgradeState,
   validateCandidateModel,
-} from "./model.js";
+} from "./model.js?v=1.1.0-r2";
 
 const TYPES = ["SO", "PPM", "ID", "DLC", "GLC"];
 const TYPE_NAMES = {
@@ -54,9 +54,17 @@ const BUCKETS = ["SAME_SECTION_BEFORE", "SAME_SECTION_AFTER", "DIFFERENT_RELEVAN
 const PPM_BUCKETS = ["DATA_COLLECTION_SECTION", "LATE_DOCUMENT_SECTION"];
 const PPM_SUBSTRATEGIES = ["SPECIFIC_FIELD_DENIAL", "CATEGORY_LEVEL_DENIAL"];
 const $ = (selector) => document.querySelector(selector);
-const manifestUrl = new URL("../../data/manifest.json", import.meta.url);
-const instructionsUrl = new URL("../../docs/VALID-syn_annotator_instructions.md", import.meta.url);
-const assetUrl = (path) => new URL(`../../${path}`, import.meta.url).href;
+const ASSET_REVISION = "1.1.0-r2";
+
+function versionedUrl(path) {
+  const url = new URL(path, import.meta.url);
+  url.searchParams.set("v", ASSET_REVISION);
+  return url;
+}
+
+const manifestUrl = versionedUrl("../../data/manifest.json");
+const instructionsUrl = versionedUrl("../../docs/VALID-syn_annotator_instructions.md");
+const assetUrl = (path) => versionedUrl(`../../${path}`).href;
 
 let manifest = null;
 let pairIndex = 0;
