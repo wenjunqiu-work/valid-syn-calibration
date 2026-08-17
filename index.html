@@ -22,12 +22,11 @@
     <div class="header-actions">
       <button class="button ghost" id="instructionsButton" type="button">Instructions</button>
       <div class="annotator-field">
-        <label for="annotatorId">Assigned annotator code</label>
+        <label for="annotatorId">Annotation name</label>
         <div class="annotator-code-row">
-          <input id="annotatorId" maxlength="32" autocomplete="off" placeholder="For testing: TEST01" aria-describedby="annotatorHelp">
+          <input id="annotatorId" maxlength="32" autocomplete="off" placeholder="Enter your annotation name">
           <button class="button primary" id="activateAnnotatorButton" type="button">Start annotation</button>
         </div>
-        <span id="annotatorHelp">For local testing, type TEST01. Study annotators should use only their assigned pseudonymous code.</span>
       </div>
       <button class="button ghost" id="backupButton" type="button">Backup draft</button>
       <button class="button ghost" id="restoreButton" type="button">Restore draft</button>
@@ -43,7 +42,7 @@
       <span id="pairProgressText">Pair 1 of 5</span>
     </div>
     <div class="progress-track" aria-hidden="true"><span id="progressFill"></span></div>
-    <div class="status-line" id="globalStatus" role="status" aria-live="polite">Enter your assigned code to begin.</div>
+    <div class="status-line" id="globalStatus" role="status" aria-live="polite">Enter your annotation name to begin.</div>
   </section>
 
   <main class="workspace" id="workspace" hidden>
@@ -133,7 +132,7 @@
     <div class="quick-start">
       <h3>Five-pair quick start</h3>
       <ol>
-        <li>Enter only your study-assigned annotator code.</li>
+        <li>Enter your annotation name, then click Start annotation.</li>
         <li>For each of five website–policy pairs, complete one SO, PPM, ID, DLC, and GLC candidate.</li>
         <li>Each candidate may contain multiple edit operations. Candidate count and CSV row count may differ.</li>
         <li>Use screenshots as the ground truth for collected fields. DLC and GLC screenshot evidence is optional.</li>

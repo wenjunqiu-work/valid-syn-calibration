@@ -720,7 +720,7 @@ function renderCandidateForm() {
   const enabled = isValidAnnotatorId(annotatorId) && Boolean(currentPolicyText);
   if (!enabled) form.prepend(make("div", {
     class: "locked-notice",
-    text: "Annotation is locked. Type an assigned code above (use TEST01 for local testing), then click Start annotation.",
+    text: "Annotation is locked. Enter your annotation name above then click Start annotation.",
   }));
   form.querySelectorAll("input,select,textarea,button").forEach((control) => { control.disabled = !enabled; });
   $("#completeCandidate").disabled = !enabled;
@@ -805,7 +805,7 @@ function validateCandidate(pair, type, candidate, policyText) {
 
 async function completeCurrentCandidate() {
   if (!isValidAnnotatorId(annotatorId)) {
-    showCandidateMessage("Enter a valid assigned annotator code first.", "error");
+    showCandidateMessage("Enter a valid annotation name first.", "error");
     return;
   }
   const pair = currentPair();
@@ -829,7 +829,7 @@ function activateAnnotator(value) {
   if (!isValidAnnotatorId(next)) {
     annotatorId = "";
     state = freshState("");
-    setGlobalStatus("Assigned code must be 2–32 letters, numbers, underscores, or hyphens. Do not use a name or email.");
+    setGlobalStatus("Annotation name must be 2–32 letters, numbers, underscores, or hyphens.");
     renderCandidateTabs();
     renderCandidateForm();
     refreshProgress();
@@ -841,7 +841,7 @@ function activateAnnotator(value) {
   renderCandidateTabs();
   renderCandidateForm();
   refreshProgress();
-  setGlobalStatus(`Local autosave active for assigned code ${annotatorId}.`);
+  setGlobalStatus(`Local autosave active for annotation name ${annotatorId}.`);
 }
 
 function downloadBlob(blob, filename) {
@@ -854,7 +854,7 @@ function downloadBlob(blob, filename) {
 
 function backupDraft() {
   if (!isValidAnnotatorId(annotatorId)) {
-    setGlobalStatus("Enter a valid assigned code before downloading a backup.");
+    setGlobalStatus("Enter a valid annotation name before downloading a backup.");
     return;
   }
   const backup = {
@@ -873,13 +873,13 @@ function backupDraft() {
 }
 
 async function restoreDraft(file) {
-  if (!isValidAnnotatorId(annotatorId)) throw new Error("Enter the assigned code for this backup before restoring it");
+  if (!isValidAnnotatorId(annotatorId)) throw new Error("Enter the annotation name for this backup before restoring it");
   const backup = JSON.parse(await file.text());
   if (backup.backup_schema_version !== 1) throw new Error("Unsupported backup format");
   for (const key of ["bundle_id", "bundle_version", "assignment_id", "batch_id"]) {
     if (backup[key] !== manifest[key]) throw new Error(`Backup ${key} does not match this calibration bundle`);
   }
-  if (backup.annotator_id !== annotatorId) throw new Error("Backup annotator code does not match the entered assigned code");
+  if (backup.annotator_id !== annotatorId) throw new Error("Backup annotation name does not match the entered annotation name");
   if (!backup.state || typeof backup.state.candidates !== "object") throw new Error("Backup state is missing or invalid");
   state = backup.state;
   saveState();
@@ -976,7 +976,7 @@ async function buildCsv(status) {
 
 async function exportCsv(finalSubmission) {
   if (!isValidAnnotatorId(annotatorId)) {
-    setGlobalStatus("Enter a valid assigned code before exporting.");
+    setGlobalStatus("Enter a valid annotation name before exporting.");
     return;
   }
   const completed = completedCount();
@@ -1022,7 +1022,7 @@ async function boot() {
     state = annotatorId ? loadState(annotatorId) : freshState("");
     $("#workspace").hidden = false;
     await renderPair();
-    if (!annotatorId) setGlobalStatus("Type an assigned code above (use TEST01 for local testing), then click Start annotation.");
+    if (!annotatorId) setGlobalStatus("Enter your annotation name above then click Start annotation.");
 
   } catch (error) {
     setGlobalStatus(`Calibration failed to load: ${error.message}`);

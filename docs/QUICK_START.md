@@ -1,7 +1,7 @@
 # VALID-syn five-pair calibration quick start
 
 1. Read the complete annotator instructions before beginning.
-2. Enter only the study-assigned annotator code you received, then click **Start annotation**. For local testing, use `TEST01`. Do not enter your name or email.
+2. Enter your annotation name, then click **Start annotation**.
 3. Review each website's exact frozen policy and its observed form screenshots.
 4. Create one candidate for each type: SO, PPM, ID, DLC, and GLC.
 5. Each candidate starts with one edit operation using the reference default: SO begins with REMOVE; PPM, ID, DLC, and GLC begin with ADD. Add more operations when needed. The target is 25 candidates, not 25 CSV rows.

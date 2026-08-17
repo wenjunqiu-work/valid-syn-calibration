@@ -5,7 +5,7 @@ This directory is a complete, dependency-free GitHub Pages site for the authorin
 ## Important content and privacy notes
 
 - The site is public-ready, not access-controlled. `robots.txt` and `noindex` reduce indexing but are not security controls.
-- Annotators must enter only a study-assigned code such as `A01` and click **Start annotation**. For local testing, use `TEST01`. They must not enter names or email addresses.
+- Annotators enter their annotation name and click **Start annotation**.
 - Drafts remain in that browser unless the annotator downloads a JSON backup. There is no server-side database or login.
 - Do not commit annotator CSV or JSON submissions to this repository.
 
@@ -39,7 +39,7 @@ The application uses only relative URLs, so it works both at a domain root and a
 
 ## Annotation and downloads
 
-- Every input change is saved in browser storage under bundle version, assignment, and assigned annotator code.
+- Every input change is saved in browser storage under bundle version, assignment, and annotation name.
 - Editing a completed candidate returns it to draft.
 - **Backup draft** downloads every partial field as JSON; **Restore draft** imports a matching backup.
 - **Working CSV** is cumulative and contains every completed candidate so far.
